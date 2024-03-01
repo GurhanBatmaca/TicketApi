@@ -1,6 +1,12 @@
+using Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<StoreContext>(opt => {
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("MsSqlConnectionString"),e=> e.MigrationsAssembly("Presentation"));
+});
 
 builder.Services.AddCors(options =>
 {
