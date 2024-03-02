@@ -11,9 +11,9 @@ public class Ticket
     public DateTime EventDate { get; set; }
 
     public int AddressId { get; set; }
-    public Address Address { get; set; } = new Address();
+    public Address? Address { get; set; }
     public int ActivityId { get; set; }
-    public Activity Activity { get; set; } = new Activity();
+    public Activity? Activity { get; set; }
 
     public List<TicketArtor> TicketArtors { get; set; } = [];
 }

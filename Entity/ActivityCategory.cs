@@ -3,8 +3,8 @@
 public class ActivityCategory
 {
     public int ActivityId { get; set; }
-    public Activity Activity { get; set; } = new Activity();
+    public Activity? Activity { get; set; }
 
     public int CategoryId { get; set; }
-    public Category Category { get; set; } = new Category();
+    public Category? Category { get; set; }
 }

@@ -88,5 +88,13 @@ public static class ModelBuilderExtention
             new ArtorWork {ArtorId=6,WorkId=5},
             new ArtorWork {ArtorId=6,WorkId=6}
         );
+
+        modelBuilder.Entity<TicketArtor>().HasData(
+            new TicketArtor {TicketId=1,ArtorId=1},
+            new TicketArtor {TicketId=2,ArtorId=3},
+            new TicketArtor {TicketId=3,ArtorId=4},
+            new TicketArtor {TicketId=4,ArtorId=4},
+            new TicketArtor {TicketId=5,ArtorId=6}
+        );
     }
 }
