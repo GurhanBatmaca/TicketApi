@@ -7,8 +7,8 @@ namespace Data;
 public class EfCoreGenericRepository<T> : IRepository<T>
     where T : class
 {
-    protected readonly StoreContext? _context;
-    public EfCoreGenericRepository(StoreContext? context)
+    protected readonly DbContext? _context;
+    public EfCoreGenericRepository(DbContext? context)
     {
         _context = context;
     }

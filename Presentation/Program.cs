@@ -8,6 +8,8 @@ builder.Services.AddDbContext<StoreContext>(opt => {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("MsSqlConnectionString"),e=> e.MigrationsAssembly("Presentation"));
 });
 
+builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(
