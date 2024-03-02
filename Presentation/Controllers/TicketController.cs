@@ -8,29 +8,33 @@ namespace Presentation;
 [Route("api/")]
 public class TicketController: ControllerBase
 {
-    protected ITicketService _ticketService;
-    public TicketController(ITicketService ticketService)
+    protected private ITicketService _ticketService;
+    protected private IConfiguration _configuration;
+    public TicketController(ITicketService ticketService,IConfiguration configuration)
     {
         _ticketService = ticketService;
+        _configuration = configuration;
     }
 
     [HttpGet]
-    [Route("get")]
-    public async Task<IActionResult> GetTest(int page=1)
+    [Route("AllTickets")]
+    public async Task<IActionResult> GetAllTickets(int page=1)
     {
-        var pageSize = 2;
-        var tickets = await _ticketService.GetAllTickets(page,pageSize);
-        var ticketCount = await _ticketService.GetAllTicketsCount();
-
+        var pageSize = Int32.Parse(_configuration["PageSize"]!);
+        var ticketList = await _ticketService.GetAllTickets(page,pageSize);
+        var totalItems = await _ticketService.GetAllTicketsCount();
+        
         var pageInfo = new PageInfo {
-            TotalItems = ticketCount,
+            TotalItems = totalItems,
             ItemPerPage = pageSize,
             CurrentPage = page,
-            TotalPage = (int)Math.Ceiling((decimal)ticketCount/pageSize)
+            TotalPage = (int)Math.Ceiling((decimal)totalItems/pageSize)
         };
 
-        return Ok(new ResponseModel {Content = tickets});
+        if(ticketList!.Count > 0)
+            return Ok( new {Tickects = ticketList, PageInfo = pageInfo});
 
-        // return Ok(new {pageInfo=pageInfo,tickets=tickets});
+        return BadRequest( new {Message = "Listenin boyutu aşıldı.", PageInfo = pageInfo});
+
     }
 }

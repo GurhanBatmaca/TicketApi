@@ -40,17 +40,19 @@ public static class ModelBuilderExtention
         );
 
         modelBuilder.Entity<Ticket>().HasData(
-            new Ticket {Id=1,SeatNumber=1,Limit=100,Name="Mercan Dede Konseri",Url="mercan-dede-konseri",Price=1000,EventDate=DateTime.Now,AddressId=1,ActivityId=1},
+            new Ticket {Id=1,SeatNumber=1,Limit=100,Name="Mercan Dede Konseri",Url="mercan-dede-konseri",Price=1000,EventDate=new DateTime(2026, 12, 01, 21, 00, 10),AddressId=1,ActivityId=1},
 
-            new Ticket {Id=2,SeatNumber=2,Limit=100,Name="Sezen Aksu Konseri",Url="sezen-aksu-konseri",Price=1500,EventDate=DateTime.Now,AddressId=1,ActivityId=1},
+            new Ticket {Id=2,SeatNumber=2,Limit=100,Name="Sezen Aksu Konseri",Url="sezen-aksu-konseri",Price=1500,EventDate=new DateTime(2026, 10, 01, 21, 00, 10),AddressId=1,ActivityId=1},
 
-            new Ticket {Id=3,SeatNumber=3,Limit=100,Name="Ajda Pekkan Konseri",Url="ajda-pekkan-konseri",Price=1500,EventDate=DateTime.Now,AddressId=2,ActivityId=1},
+            new Ticket {Id=3,SeatNumber=3,Limit=100,Name="Ajda Pekkan Konseri",Url="ajda-pekkan-konseri",Price=1500,EventDate=new DateTime(2026, 06, 01, 21, 00, 10),AddressId=2,ActivityId=1},
 
             new Ticket {Id=4,SeatNumber=4,Limit=100,Name="Ajda Pekkan Konseri",Url="ajda-pekkan-konseri",
-            Price=1500,EventDate=DateTime.Now,AddressId=2,ActivityId=1},
+            Price=1500,EventDate=new DateTime(2026, 05, 01, 21, 00, 10),AddressId=2,ActivityId=1},
 
             new Ticket {Id=5,SeatNumber=5,Limit=100,Name="Betül Mardin Konuşma",Url="betul-mardin-konusma",
-            Price=1200,EventDate=DateTime.Now,AddressId=3,ActivityId=3}
+            Price=1200,EventDate=new DateTime(2026, 04, 01, 21, 00, 10),AddressId=3,ActivityId=3},
+
+            new Ticket {Id=6,SeatNumber=1,Limit=100,Name="Serra Yılmaz Konseri",Url="serra-yilmaz-konseri",Price=800,EventDate=new DateTime(2026, 03, 23, 23, 10, 10),AddressId=1,ActivityId=1}
         );
 
         modelBuilder.Entity<Work>().HasData(

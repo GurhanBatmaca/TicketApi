@@ -27,20 +27,19 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
         var tickets = ticketList.Select(e => new TicketDTO {
             Name = e.Name,
             Price = e.Price,
-            EventDate = e.EventDate,
+            EventDate = e.EventDate.ToString("dd/MM/yyyy HH:mm"),
             Address = e.Address!.Title,
             City = e.Address.City,
             Country = e.Address.Country,
             Activity = e.Activity!.Name,
             Artors = e.TicketArtors.Select(i=> i.Artor!.Name).ToList(),
-        });;
+        });
 
-        return await tickets.Skip((page-1)*pageSize).Take(pageSize).ToListAsync();
+        return tickets is not null ? await tickets.Skip((page-1)*pageSize).Take(pageSize).ToListAsync() : [];
     }
 
     public async Task<int> GetAllTicketsCount()
     {
-        return await  Context!.Tickets
-                                .Where(e=> e.Limit > 0).CountAsync();
+        return await Context!.Tickets.Where(e=> e.Limit > 0).CountAsync();
     }
 }
