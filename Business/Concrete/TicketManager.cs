@@ -43,6 +43,16 @@ public class TicketManager : ITicketService
         throw new NotImplementedException();
     }
 
+    public async Task<List<TicketDTO>> GetTicketsByActivity(int page, int pageSize, string activity)
+    {
+        return await _unitOfWork!.Tickets.GetTicketsByActivity(page,pageSize,activity);
+    }
+
+    public async Task<int> GetTicketsByActivityCount(string activity)
+    {
+        return await _unitOfWork!.Tickets.GetTicketsByActivityCount(activity);
+    }
+
     public Task Update(Ticket entity)
     {
         throw new NotImplementedException();
