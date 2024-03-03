@@ -6,7 +6,7 @@ using Shared.Helpers;
 namespace Presentation;
 
 [ApiController]
-[Route("api/")]
+[Route("api/tickets")]
 public class TicketController: ControllerBase
 {
     protected private ITicketService _ticketService;
@@ -41,11 +41,33 @@ public class TicketController: ControllerBase
 
     [HttpGet]
     [Route("TicketsByActivity")]
-    public async Task<IActionResult> GetTicketsByActivity(string activity,int page=1)
+    public async Task<IActionResult> GetTicketsByActivity(string activity="",int page=1)
     {
         var pageSize = Int32.Parse(_configuration["PageSize"]!);
         var ticketList = await _ticketService.GetTicketsByActivity(page,pageSize,UrlConverter.Convert(activity));
         var totalItems = await _ticketService.GetTicketsByActivityCount(UrlConverter.Convert(activity));
+        
+        var pageInfo = new PageInfo {
+            TotalItems = totalItems,
+            ItemPerPage = pageSize,
+            CurrentPage = page,
+            TotalPage = (int)Math.Ceiling((decimal)totalItems/pageSize)
+        };
+
+        if(ticketList!.Count > 0)
+            return Ok( new {Tickects = ticketList, PageInfo = pageInfo});
+
+        return BadRequest( new {Message = "Listenin boyutu aşıldı.", PageInfo = pageInfo});
+
+    }
+
+    [HttpGet]
+    [Route("Search")]
+    public async Task<IActionResult> GetSearchResult(DateTime date,string searcString="",int page=1)
+    {
+        var pageSize = Int32.Parse(_configuration["PageSize"]!);
+        var ticketList = await _ticketService.GetSearchResult(page,pageSize,UrlConverter.Convert(searcString),date);
+        var totalItems = await _ticketService.GetTicketsByActivityCount(UrlConverter.Convert(searcString));
         
         var pageInfo = new PageInfo {
             TotalItems = totalItems,
