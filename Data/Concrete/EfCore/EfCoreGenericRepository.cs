@@ -1,5 +1,6 @@
 ﻿
 
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data;
@@ -8,9 +9,11 @@ public class EfCoreGenericRepository<T> : IRepository<T>
     where T : class
 {
     protected readonly DbContext? _context;
-    public EfCoreGenericRepository(DbContext? context)
+    protected readonly IMapper? _mapper;
+    public EfCoreGenericRepository(DbContext? context,IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
     public async Task Create(T entity)
     {
