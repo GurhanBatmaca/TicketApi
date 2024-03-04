@@ -30,7 +30,7 @@ public class TicketController: ControllerBase
         return Ok( new { Tickects = ticketList, PageInfo = pageInfo } );
     }
 
-    [HttpPost]
+    [HttpGet]
     [Route("Filter")]
     public async Task<IActionResult> Filter([FromQuery] FilterModel model,int page=1)
     {
