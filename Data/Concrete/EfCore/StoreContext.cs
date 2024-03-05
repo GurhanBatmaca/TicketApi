@@ -27,6 +27,6 @@ public class StoreContext: DbContext
         modelBuilder.Entity<Ticket>().HasKey(e=>e.Id);
         modelBuilder.Entity<Work>().HasKey(e=>e.Id);
 
-        // modelBuilder.Seed();
+        modelBuilder.Seed();
     }
 }

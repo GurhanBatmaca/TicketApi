@@ -53,15 +53,15 @@ public class TicketManager : ITicketService
     //     return await _unitOfWork!.Tickets.GetSearchResultCount(searcString,date);
     // }
 
-    // public async Task<List<TicketDTO>> GetTicketsByActivity(int page, int pageSize, string activity)
-    // {
-    //     return await _unitOfWork!.Tickets.GetTicketsByActivity(page,pageSize,activity);
-    // }
+    public async Task<List<TicketDTO>> GetFilterResult(FilterModel model,int page,int pageSize)
+    {
+        return await _unitOfWork!.Tickets.GetFilterResult(model,page,pageSize);
+    }
 
-    // public async Task<int> GetTicketsByActivityCount(string activity)
-    // {
-    //     return await _unitOfWork!.Tickets.GetTicketsByActivityCount(activity);
-    // }
+    public async Task<int> GetFilterResultCount(FilterModel model)
+    {
+        return await _unitOfWork!.Tickets.GetFilterResultCount(model);
+    }
 
     public Task Update(Ticket entity)
     {

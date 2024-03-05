@@ -34,21 +34,12 @@ public class TicketController: ControllerBase
     [Route("Filter")]
     public async Task<IActionResult> Filter([FromQuery] FilterModel model,int page=1)
     {
-        // var ticketList = await _ticketService.GetTicketsByActivity(page,pageSize,UrlConverter.Convert(activity));
-        // var totalItems = await _ticketService.GetTicketsByActivityCount(UrlConverter.Convert(activity));
+        var ticketList = await _ticketService.GetFilterResult(model,page,PageSize);
+        var totalItems = await _ticketService.GetFilterResultCount(model);
         
-        // var pageInfo = new PageInfo {
-        //     TotalItems = totalItems,
-        //     ItemPerPage = pageSize,
-        //     CurrentPage = page,
-        //     TotalPage = (int)Math.Ceiling((decimal)totalItems/pageSize)
-        // };
+        var pageInfo = new PageInfo {TotalItems=totalItems,ItemPerPage=PageSize,CurrentPage=page,};
 
-        // if(ticketList!.Count > 0)
-        //     return Ok( new {Tickects = ticketList, PageInfo = pageInfo});
-
-        // return BadRequest( new {Message = "Listenin boyutu aşıldı.", PageInfo = pageInfo});
-        return Ok();
+        return Ok( new { Tickects = ticketList, PageInfo = pageInfo } );
 
     }
 

@@ -23,7 +23,7 @@ public static class ModelBuilderExtention
             new Address {Id=4,Title="Rockefeller Center",City="New York",Country="USA",ImageUrl=""},
 
             new Address {Id=5,Title="İstanbul Devlet Tiyatrosu",City="İstanbul",Country="Türkiye",ImageUrl=""},
-            new Address {Id=6,Title="Ankara Sanat Tiyatrosu",City="İstanbul",Country="Türkiye",ImageUrl=""},
+            new Address {Id=6,Title="Ankara Sanat Tiyatrosu",City="Ankara",Country="Türkiye",ImageUrl=""},
             new Address {Id=7,Title="Cinetime Sinemaları",City="İstanbul",Country="Türkiye",ImageUrl=""}
         );
 
