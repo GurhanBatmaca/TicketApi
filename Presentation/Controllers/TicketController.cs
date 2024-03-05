@@ -36,33 +36,23 @@ public class TicketController: ControllerBase
     {
         var ticketList = await _ticketService.GetFilterResult(model,page,PageSize);
         var totalItems = await _ticketService.GetFilterResultCount(model);
-        
         var pageInfo = new PageInfo {TotalItems=totalItems,ItemPerPage=PageSize,CurrentPage=page,};
 
         return Ok( new { Tickects = ticketList, PageInfo = pageInfo } );
 
     }
 
-    // [HttpGet]
-    // [Route("Search")]
-    // public async Task<IActionResult> Search(DateTime date,string searcString="",int page=1)
-    // {
-    //     var ticketList = await _ticketService.GetSearchResult(page,pageSize,UrlConverter.Convert(searcString),date);
-    //     var totalItems = await _ticketService.GetTicketsByActivityCount(UrlConverter.Convert(searcString));
-        
-    //     var pageInfo = new PageInfo {
-    //         TotalItems = totalItems,
-    //         ItemPerPage = pageSize,
-    //         CurrentPage = page,
-    //         TotalPage = (int)Math.Ceiling((decimal)totalItems/pageSize)
-    //     };
+    [HttpGet]
+    [Route("Search")]
+    public async Task<IActionResult> Search([FromQuery] SearchModel model,int page=1)
+    {
+        var ticketList = await _ticketService.GetSearchResult(model,page,PageSize);
+        var totalItems = await _ticketService.GetSearchResultCount(model);
+        var pageInfo = new PageInfo {TotalItems=totalItems,ItemPerPage=PageSize,CurrentPage=page,};
 
-    //     if(ticketList!.Count > 0)
-    //         return Ok( new {Tickects = ticketList, PageInfo = pageInfo});
+        return Ok( new { Tickects = ticketList, PageInfo = pageInfo } );
 
-    //     return BadRequest( new {Message = "Listenin boyutu aşıldı.", PageInfo = pageInfo});
-
-    // }
+    }
 
 
 }

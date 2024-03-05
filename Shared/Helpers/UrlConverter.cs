@@ -5,7 +5,7 @@ namespace Shared.Helpers
         public static string Convert(string url)
         {
 
-            return url.Trim()
+            return url is not null ? url.Trim()
                         .ToLower()
                         .Replace(" ", "-")
                         .Replace(".", "-")
@@ -15,7 +15,9 @@ namespace Shared.Helpers
                         .Replace("ğ", "g")
                         .Replace("ı", "i")
                         .Replace("ö", "o")
-                        .Replace("'", "-");
+                        .Replace("'", "-")
+
+            : string.Empty;
         }
     }
 }
