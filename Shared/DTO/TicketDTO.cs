@@ -3,7 +3,8 @@
 public class TicketDTO
 {
     public string Name { get; set; } = string.Empty;
-    public string? EventDate { get; set; }
+    public DateTime EventDate { get; set; }
+    public string ImageUrl { get; set; } = string.Empty;
     public double Price { get; set; }
     
     public ActivityDTO? Activity { get; set; }
