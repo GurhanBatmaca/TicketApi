@@ -31,7 +31,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
         var tickets = ticketList.Select(e => new TicketDTO {
             Name = e.Name,
             Price = e.Price,
-            // EventDate = e.EventDate.ToString("dd/MM/yyyy HH:mm"),
+            Url = e.Url,
             EventDate = e.EventDate,
             ImageUrl = e.ImageUrl,
             Activity = new ActivityDTO {
@@ -81,7 +81,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
         var tickets = ticketList.Select(e => new TicketDTO {
             Name = e.Name,
             Price = e.Price,
-            // EventDate = e.EventDate.ToString("dd/MM/yyyy HH:mm"),
+            Url = e.Url,
             EventDate = e.EventDate,
             ImageUrl = e.ImageUrl,
             Activity = new ActivityDTO {
@@ -151,7 +151,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
         var tickets = ticketList.Select(e => new TicketDTO {
             Name = e.Name,
             Price = e.Price,
-            // EventDate = e.EventDate.ToString("dd/MM/yyyy HH:mm"),
+            Url = e.Url,
             EventDate = e.EventDate,
             ImageUrl = e.ImageUrl,
             Activity = new ActivityDTO {
