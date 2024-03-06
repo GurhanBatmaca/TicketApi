@@ -64,13 +64,17 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 .Include(e => e.TicketArtors)
                                 .ThenInclude(e=> e.Artor)
                                 .Where(
-                                    e => e.Limit > 0 && 
+                                    e => e.Limit > 0 &&
                                     e.Activity!.Url.Contains(model.Activity) && 
                                     ( e.Address!.City.Contains(model.Address) || e.Address!.Title.Contains(model.Address) ) &&
                                     e.TicketArtors.Any(i=> i.Artor!.Url.Contains(model.Artor))
                                 )
                                 .AsQueryable();
 
+        if(model.Price > 0)
+        {
+            ticketList =  ticketList.Where(e => e.Price <= model.Price);
+        }
 
         var tickets = ticketList.Select(e => new TicketDTO {
             Name = e.Name,
@@ -103,12 +107,17 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 .Include(e => e.TicketArtors)
                                 .ThenInclude(e=> e.Artor)
                                 .Where(
-                                    e => e.Limit > 0 && 
+                                    e => e.Limit > 0 &&
                                     e.Activity!.Url.Contains(model.Activity) && 
                                     ( e.Address!.City.Contains(model.Address) || e.Address!.Title.Contains(model.Address) ) &&
                                     e.TicketArtors.Any(i=> i.Artor!.Url.Contains(model.Artor))
                                 )
                                 .AsQueryable();
+
+        if(model.Price > 0)
+        {
+            ticketList =  ticketList.Where(e => e.Price <= model.Price);
+        }
 
         return await ticketList.CountAsync();
     }
@@ -125,10 +134,15 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 .Include(e => e.TicketArtors)
                                 .ThenInclude(e=> e.Artor)
                                 .Where(e => 
-                                    (e.EventDate >= model.Date && e.Limit > 0) && 
+                                    (e.EventDate >= model.Date && e.Limit > 0 ) && 
                                     (e.Url.Contains(model.Query) ||  e.Activity!.Url.Contains(model.Query) || e.Activity.ActivityCategories.Any(i=> i.Category!.Url.Contains(model.Query)) || e.Address!.City.Contains(model.Query) || e.Address!.Title.Contains(model.Query) || e.TicketArtors.Any(i => i.Artor!.Url.Contains(model.Query)))
                                 )
                                 .AsQueryable();
+
+        if(model.Price > 0)
+        {
+            ticketList =  ticketList.Where(e => e.Price <= model.Price);
+        }
 
         var tickets = ticketList.Select(e => new TicketDTO {
             Name = e.Name,
@@ -159,10 +173,15 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 .Include(e => e.TicketArtors)
                                 .ThenInclude(e=> e.Artor)
                                 .Where(e => 
-                                    (e.EventDate >= model.Date && e.Limit > 0) && 
+                                    (e.EventDate >= model.Date && e.Limit > 0 ) && 
                                     (e.Url.Contains(model.Query) ||  e.Activity!.Url.Contains(model.Query) || e.Activity.ActivityCategories.Any(i=> i.Category!.Url.Contains(model.Query)) || e.Address!.City.Contains(model.Query) || e.Address!.Title.Contains(model.Query) || e.TicketArtors.Any(i => i.Artor!.Url.Contains(model.Query)))
                                 )
                                 .AsQueryable();
+
+        if(model.Price > 0)
+        {
+            ticketList =  ticketList.Where(e => e.Price <= model.Price);
+        }
 
         return await ticketList.CountAsync();
     }
