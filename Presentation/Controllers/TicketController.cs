@@ -92,4 +92,20 @@ public class TicketController: ControllerBase
     }
 
 
+    [HttpGet]
+    [Route("Ticket/{id}")]
+    public async Task<IActionResult> TicketById(int id)
+    {
+        var ticket = await _ticketService.GetTicketById(id);
+
+        if(!string.IsNullOrEmpty(ticket!.Name))
+        {
+            return Ok( new { Ticket = ticket } );
+        }
+        else
+        {
+            return BadRequest("TicketId hatası.");
+        }
+    }
+
 }

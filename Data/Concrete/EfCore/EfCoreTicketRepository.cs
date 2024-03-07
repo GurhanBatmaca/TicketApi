@@ -24,6 +24,11 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 .Include(e=> e.Activity)
                                 .AsQueryable();
 
+        if(ticketList is null)
+        {
+            return [];
+        }
+
         var tickets = ticketList.Select(e => new TicketSummaryDTO {
             Name = e.Name,
             Price = e.Price,
@@ -33,7 +38,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
             Address = e.Address!.Title
         });
 
-        return tickets is not null ? await tickets.Skip((page-1)*pageSize).Take(pageSize).ToListAsync() : [];
+        return await tickets.Skip((page-1)*pageSize).Take(pageSize).ToListAsync();
     }
 
     public async Task<int> GetAllCount()
@@ -53,6 +58,11 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 .ThenInclude(e=> e.Artor)
                                 .AsQueryable();
 
+        if(ticketList is null)
+        {
+            return [];
+        }
+
         var tickets = ticketList.Select(e => new TicketDTO {
             Name = e.Name,
             Price = e.Price,
@@ -69,7 +79,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
             Artors = e.TicketArtors.Select( i=> _mapper!.Map<ArtorDTO>(i.Artor)).ToList(),
         });
 
-        return tickets is not null ? await tickets.Skip((page-1)*pageSize).Take(pageSize).ToListAsync() : [];
+        return await tickets.Skip((page-1)*pageSize).Take(pageSize).ToListAsync();
     }
 
     public async Task<int> GetAllWithDetailsCount()
@@ -98,6 +108,11 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 )
                                 .AsQueryable();
 
+        if(ticketList is null)
+        {
+            return [];
+        }
+
         if(model.Price > 0)
         {
             ticketList =  ticketList.Where(e => e.Price <= model.Price);
@@ -112,7 +127,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
             Address = e.Address!.Title,
         });
 
-        return tickets is not null ? await tickets.Skip((page-1)*pageSize).Take(pageSize).ToListAsync() : [];
+        return await tickets.Skip((page-1)*pageSize).Take(pageSize).ToListAsync();
     }
 
     public async Task<int> GetFilterResultCount(FilterModel model)
@@ -135,6 +150,11 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                     e.TicketArtors.Any(i=> i.Artor!.Url.Contains(model.Artor))
                                 )
                                 .AsQueryable();
+
+        if(ticketList is null)
+        {
+            return 0;
+        }
 
         if(model.Price > 0)
         {
@@ -165,6 +185,11 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 )
                                 .AsQueryable();
 
+        if(ticketList is null)
+        {
+            return [];
+        }
+
         if(model.Price > 0)
         {
             ticketList =  ticketList.Where(e => e.Price <= model.Price);
@@ -186,7 +211,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
             Artors = e.TicketArtors.Select( i=> _mapper!.Map<ArtorDTO>(i.Artor)).ToList(),
         });
 
-        return tickets is not null ? await tickets.Skip((page-1)*pageSize).Take(pageSize).ToListAsync() : [];
+        return await tickets.Skip((page-1)*pageSize).Take(pageSize).ToListAsync();
     }
 
     public async Task<int> GetFilterResultWithDetailsCount(FilterModel model)
@@ -209,6 +234,11 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                     e.TicketArtors.Any(i=> i.Artor!.Url.Contains(model.Artor))
                                 )
                                 .AsQueryable();
+
+        if(ticketList is null)
+        {
+            return 0;
+        }
 
         if(model.Price > 0)
         {
@@ -235,6 +265,11 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 )
                                 .AsQueryable();
 
+        if(ticketList is null)
+        {
+            return [];
+        }
+
         if(model.Price > 0)
         {
             ticketList =  ticketList.Where(e => e.Price <= model.Price);
@@ -249,7 +284,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
             Address = e.Address!.Title,
         });
 
-        return tickets is not null ? await tickets.Skip((page-1)*pageSize).Take(pageSize).ToListAsync() : [];
+        return await tickets.Skip((page-1)*pageSize).Take(pageSize).ToListAsync();
     }
 
     public async Task<int> GetSearchResultCount(SearchModel model)
@@ -268,6 +303,11 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                     (e.Url.Contains(model.Query) ||  e.Activity!.Url.Contains(model.Query) || e.Activity.ActivityCategories.Any(i=> i.Category!.Url.Contains(model.Query)) || e.Address!.City.Contains(model.Query) || e.Address!.Title.Contains(model.Query) || e.TicketArtors.Any(i => i.Artor!.Url.Contains(model.Query)))
                                 )
                                 .AsQueryable();
+
+        if(ticketList is null)
+        {
+            return 0;
+        }
 
         if(model.Price > 0)
         {
@@ -294,6 +334,11 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 )
                                 .AsQueryable();
 
+        if(ticketList is null)
+        {
+            return [];
+        }
+
         if(model.Price > 0)
         {
             ticketList =  ticketList.Where(e => e.Price <= model.Price);
@@ -315,7 +360,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
             Artors = e.TicketArtors.Select( i=> _mapper!.Map<ArtorDTO>(i.Artor)).ToList(),
         });
 
-        return tickets is not null ? await tickets.Skip((page-1)*pageSize).Take(pageSize).ToListAsync() : [];
+        return await tickets.Skip((page-1)*pageSize).Take(pageSize).ToListAsync();
     }
 
     public async Task<int> GetSearchResultWithDetailsCount(SearchModel model)
@@ -335,11 +380,54 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 )
                                 .AsQueryable();
 
+        if(ticketList is null)
+        {
+            return 0;
+        }
+
         if(model.Price > 0)
         {
             ticketList =  ticketList.Where(e => e.Price <= model.Price);
         }
 
         return await ticketList.CountAsync();
+    }
+
+    public async Task<TicketDTO?> GetTicketById(int id)
+    {
+        var ticket = await Context!.Tickets
+                                .Where(e=> e.Limit > 0)
+                                .Include(e=> e.Address)
+                                .Include(e=> e.Activity)
+                                .ThenInclude(e=> e!.ActivityCategories)
+                                .ThenInclude(e=> e.Category)
+                                .Include(e => e.TicketArtors)
+                                .ThenInclude(e=> e.Artor)
+                                .FirstOrDefaultAsync(e=> e.Id == id);
+
+        if(ticket is null)
+        {       
+            return new TicketDTO();
+        }
+
+        var ticketDTO = new TicketDTO
+        {
+            Name = ticket!.Name,
+            Price = ticket.Price,
+            Url = ticket.Url,
+            EventDate = ticket.EventDate,
+            ImageUrl = ticket.ImageUrl,
+            Activity = new ActivityDTO {
+                Name = ticket.Activity!.Name,
+                Url = ticket.Activity.Url,
+                ImageUrl = ticket.Activity.ImageUrl,
+                Categories = ticket.Activity.ActivityCategories.Select(i => _mapper!.Map<CategoryDTO>(i.Category)).ToList() 
+            },
+            Address = _mapper!.Map<AddressDTO>(ticket.Address),
+            Artors = ticket.TicketArtors.Select( i=> _mapper!.Map<ArtorDTO>(i.Artor)).ToList()
+        };
+
+        return ticketDTO;
+
     }
 }

@@ -100,4 +100,9 @@ public class TicketManager : ITicketService
     {
         return await _unitOfWork!.Tickets.GetSearchResultWithDetailsCount(model);
     }
+
+    public async Task<TicketDTO?> GetTicketById(int id)
+    {
+        return await _unitOfWork!.Tickets.GetTicketById(id);
+    }
 }
