@@ -5,10 +5,18 @@ namespace Data;
 
 public interface ITicketRepository: IRepository<Ticket>
 {
-    Task<List<TicketDTO>> GetAllTickets(int page,int pageSize);
-    Task<int> GetAllTicketsCount();
-    Task<List<TicketDTO>> GetFilterResult(FilterModel model,int page,int pageSize);
+    Task<List<TicketSummaryDTO>> GetAll(int page,int pageSize);
+    Task<int> GetAllCount();
+    Task<List<TicketDTO>> GetAllWithDetails(int page,int pageSize);
+    Task<int> GetAllWithDetailsCount();
+    
+    Task<List<TicketSummaryDTO>> GetFilterResult(FilterModel model,int page,int pageSize);
     Task<int> GetFilterResultCount(FilterModel model);
-    Task<List<TicketDTO>> GetSearchResult(SearchModel model,int page,int pageSize);
+    Task<List<TicketDTO>> GetFilterResultWithDetails(FilterModel model,int page,int pageSize);
+    Task<int> GetFilterResultWithDetailsCount(FilterModel model);
+
+    Task<List<TicketSummaryDTO>> GetSearchResult(SearchModel model,int page,int pageSize);
     Task<int> GetSearchResultCount(SearchModel model);
+    Task<List<TicketDTO>> GetSearchResultWithDetails(SearchModel model,int page,int pageSize);
+    Task<int> GetSearchResultWithDetailsCount(SearchModel model);
 }
