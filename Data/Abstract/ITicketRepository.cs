@@ -20,5 +20,5 @@ public interface ITicketRepository: IRepository<Ticket>
     Task<List<TicketDTO>> GetSearchResultWithDetails(SearchModel model,int page,int pageSize);
     Task<int> GetSearchResultWithDetailsCount(SearchModel model);
 
-    Task<TicketDTO?> GetTicketById(int id);
+    Task<TicketDTO?> GetById(int id);
 }

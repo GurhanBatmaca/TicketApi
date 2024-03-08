@@ -13,6 +13,7 @@ builder.Services.AddDbContext<StoreContext>(opt => {
 builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 
 builder.Services.AddScoped<ITicketService,TicketManager>();
+builder.Services.AddScoped<IActivityService,ActivityManager>();
 
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 

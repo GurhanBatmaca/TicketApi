@@ -12,7 +12,10 @@ public class UnitOfWork : IUnitOfWork
         _mapper = mapper;
     }
     protected private EfCoreTicketRepository? ticketRepository;
+    protected private EfCoreActivityRepository? activityRepository;
     public ITicketRepository Tickets => ticketRepository ?? new EfCoreTicketRepository(_context!,_mapper);
+
+    public IActivityRepository Activities => activityRepository ?? new EfCoreActivityRepository(_context!,_mapper);
 
     public void Dispose()
     {

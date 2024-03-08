@@ -29,18 +29,6 @@ public class TicketManager : ITicketService
         throw new NotImplementedException();
     }
 
-
-    public Task<List<Ticket>?> GetAll()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<Ticket?> GetById(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-
     public async Task<List<TicketSummaryDTO>?> GetAll(int page, int pageSize)
     {
         return await _unitOfWork!.Tickets.GetAll(page,pageSize);
@@ -101,8 +89,8 @@ public class TicketManager : ITicketService
         return await _unitOfWork!.Tickets.GetSearchResultWithDetailsCount(model);
     }
 
-    public async Task<TicketDTO?> GetTicketById(int id)
+    public async Task<TicketDTO?> GetById(int id)
     {
-        return await _unitOfWork!.Tickets.GetTicketById(id);
+        return await _unitOfWork!.Tickets.GetById(id);
     }
 }

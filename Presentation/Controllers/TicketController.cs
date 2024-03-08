@@ -94,9 +94,9 @@ public class TicketController: ControllerBase
 
     [HttpGet]
     [Route("Ticket/{id}")]
-    public async Task<IActionResult> TicketById(int id)
+    public async Task<IActionResult> TicketDetails(int id)
     {
-        var ticket = await _ticketService.GetTicketById(id);
+        var ticket = await _ticketService.GetById(id);
 
         if(!string.IsNullOrEmpty(ticket!.Name))
         {
@@ -104,7 +104,7 @@ public class TicketController: ControllerBase
         }
         else
         {
-            return BadRequest("TicketId hatası.");
+            return BadRequest( new { Error = "TicketId hatası" } );
         }
     }
 

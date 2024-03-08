@@ -393,7 +393,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
         return await ticketList.CountAsync();
     }
 
-    public async Task<TicketDTO?> GetTicketById(int id)
+    public async Task<TicketDTO?> GetById(int id)
     {
         var ticket = await Context!.Tickets
                                 .Where(e=> e.Limit > 0)

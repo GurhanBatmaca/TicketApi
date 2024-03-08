@@ -19,5 +19,5 @@ public interface ITicketService: IService<Ticket>
     Task<int> GetSearchResultCount(SearchModel model);
     Task<List<TicketDTO>> GetSearchResultWithDetails(SearchModel model,int page,int pageSize);
     Task<int> GetSearchResultWithDetailsCount(SearchModel model);
-    Task<TicketDTO?> GetTicketById(int id);
+    Task<TicketDTO?> GetById(int id);
 }

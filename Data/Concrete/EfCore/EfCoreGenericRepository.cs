@@ -21,17 +21,6 @@ public class EfCoreGenericRepository<T> : IRepository<T>
         _context!.Set<T>().Remove(entity);
         await _context.SaveChangesAsync();
     }
-
-    public async Task<List<T>?> GetAll()
-    {
-        return await _context!.Set<T>().ToListAsync();
-    }
-
-    public async Task<T?> GetById(int id)
-    {
-        return await _context!.Set<T>().FindAsync(id);
-    }
-
     public async Task Update(T entity)
     {
         _context!.Entry(entity).State = EntityState.Modified;
