@@ -13,9 +13,12 @@ public class UnitOfWork : IUnitOfWork
     }
     protected private EfCoreTicketRepository? ticketRepository;
     protected private EfCoreActivityRepository? activityRepository;
+    protected private EfCoreAddressRepository? addressRepository;
     public ITicketRepository Tickets => ticketRepository ?? new EfCoreTicketRepository(_context!,_mapper);
 
     public IActivityRepository Activities => activityRepository ?? new EfCoreActivityRepository(_context!,_mapper);
+
+    public IAddressRepository Addresses => addressRepository ??  new EfCoreAddressRepository(_context!,_mapper);
 
     public void Dispose()
     {

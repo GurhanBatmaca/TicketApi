@@ -95,6 +95,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
 
         var ticketList = Context!.Tickets
                                 .Include(e=> e.Address)
+                                .ThenInclude(e => e!.City)
                                 .Include(e=> e.Activity)
                                 .ThenInclude(e=> e!.ActivityCategories)
                                 .ThenInclude(e=> e.Category)
@@ -103,7 +104,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 .Where(e => 
                                     (e.EventDate >= model.Date && e.Limit > 0 ) &&  
                                     e.Activity!.Url.Contains(model.Activity) && 
-                                    ( e.Address!.City.Contains(model.Address) || e.Address!.Title.Contains(model.Address) ) &&
+                                    ( e.Address!.City!.Name.Contains(model.Address) || e.Address!.Title.Contains(model.Address) ) &&
                                     e.TicketArtors.Any(i=> i.Artor!.Url.Contains(model.Artor))
                                 )
                                 .AsQueryable();
@@ -146,7 +147,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 .Where(e => 
                                     (e.EventDate >= model.Date && e.Limit > 0 ) && 
                                     e.Activity!.Url.Contains(model.Activity) && 
-                                    ( e.Address!.City.Contains(model.Address) || e.Address!.Title.Contains(model.Address) ) &&
+                                    ( e.Address!.City!.Name.Contains(model.Address) || e.Address!.Title.Contains(model.Address) ) &&
                                     e.TicketArtors.Any(i=> i.Artor!.Url.Contains(model.Artor))
                                 )
                                 .AsQueryable();
@@ -180,7 +181,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 .Where(e => 
                                     (e.EventDate >= model.Date && e.Limit > 0 ) && 
                                     e.Activity!.Url.Contains(model.Activity) && 
-                                    ( e.Address!.City.Contains(model.Address) || e.Address!.Title.Contains(model.Address) ) &&
+                                    ( e.Address!.City!.Name.Contains(model.Address) || e.Address!.Title.Contains(model.Address) ) &&
                                     e.TicketArtors.Any(i=> i.Artor!.Url.Contains(model.Artor))
                                 )
                                 .AsQueryable();
@@ -230,7 +231,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 .Where(e => 
                                     (e.EventDate >= model.Date && e.Limit > 0 ) && 
                                     e.Activity!.Url.Contains(model.Activity) && 
-                                    ( e.Address!.City.Contains(model.Address) || e.Address!.Title.Contains(model.Address) ) &&
+                                    ( e.Address!.City!.Name.Contains(model.Address) || e.Address!.Title.Contains(model.Address) ) &&
                                     e.TicketArtors.Any(i=> i.Artor!.Url.Contains(model.Artor))
                                 )
                                 .AsQueryable();
@@ -261,7 +262,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 .ThenInclude(e=> e.Artor)
                                 .Where(e => 
                                     (e.EventDate >= model.Date && e.Limit > 0 ) && 
-                                    (e.Url.Contains(model.Query) ||  e.Activity!.Url.Contains(model.Query) || e.Activity.ActivityCategories.Any(i=> i.Category!.Url.Contains(model.Query)) || e.Address!.City.Contains(model.Query) || e.Address!.Title.Contains(model.Query) || e.TicketArtors.Any(i => i.Artor!.Url.Contains(model.Query)))
+                                    (e.Url.Contains(model.Query) ||  e.Activity!.Url.Contains(model.Query) || e.Activity.ActivityCategories.Any(i=> i.Category!.Url.Contains(model.Query)) || e.Address!.City!.Name.Contains(model.Query) || e.Address!.Title.Contains(model.Query) || e.TicketArtors.Any(i => i.Artor!.Url.Contains(model.Query)))
                                 )
                                 .AsQueryable();
 
@@ -300,7 +301,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 .ThenInclude(e=> e.Artor)
                                 .Where(e => 
                                     (e.EventDate >= model.Date && e.Limit > 0 ) && 
-                                    (e.Url.Contains(model.Query) ||  e.Activity!.Url.Contains(model.Query) || e.Activity.ActivityCategories.Any(i=> i.Category!.Url.Contains(model.Query)) || e.Address!.City.Contains(model.Query) || e.Address!.Title.Contains(model.Query) || e.TicketArtors.Any(i => i.Artor!.Url.Contains(model.Query)))
+                                    (e.Url.Contains(model.Query) ||  e.Activity!.Url.Contains(model.Query) || e.Activity.ActivityCategories.Any(i=> i.Category!.Url.Contains(model.Query)) || e.Address!.City!.Name.Contains(model.Query) || e.Address!.Title.Contains(model.Query) || e.TicketArtors.Any(i => i.Artor!.Url.Contains(model.Query)))
                                 )
                                 .AsQueryable();
 
@@ -330,7 +331,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 .ThenInclude(e=> e.Artor)
                                 .Where(e => 
                                     (e.EventDate >= model.Date && e.Limit > 0 ) && 
-                                    (e.Url.Contains(model.Query) ||  e.Activity!.Url.Contains(model.Query) || e.Activity.ActivityCategories.Any(i=> i.Category!.Url.Contains(model.Query)) || e.Address!.City.Contains(model.Query) || e.Address!.Title.Contains(model.Query) || e.TicketArtors.Any(i => i.Artor!.Url.Contains(model.Query)))
+                                    (e.Url.Contains(model.Query) ||  e.Activity!.Url.Contains(model.Query) || e.Activity.ActivityCategories.Any(i=> i.Category!.Url.Contains(model.Query)) || e.Address!.City!.Name.Contains(model.Query) || e.Address!.Title.Contains(model.Query) || e.TicketArtors.Any(i => i.Artor!.Url.Contains(model.Query)))
                                 )
                                 .AsQueryable();
 
@@ -376,7 +377,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 .ThenInclude(e=> e.Artor)
                                 .Where(e => 
                                     (e.EventDate >= model.Date && e.Limit > 0 ) && 
-                                    (e.Url.Contains(model.Query) ||  e.Activity!.Url.Contains(model.Query) || e.Activity.ActivityCategories.Any(i=> i.Category!.Url.Contains(model.Query)) || e.Address!.City.Contains(model.Query) || e.Address!.Title.Contains(model.Query) || e.TicketArtors.Any(i => i.Artor!.Url.Contains(model.Query)))
+                                    (e.Url.Contains(model.Query) ||  e.Activity!.Url.Contains(model.Query) || e.Activity.ActivityCategories.Any(i=> i.Category!.Url.Contains(model.Query)) || e.Address!.City!.Name.Contains(model.Query) || e.Address!.Title.Contains(model.Query) || e.TicketArtors.Any(i => i.Artor!.Url.Contains(model.Query)))
                                 )
                                 .AsQueryable();
 

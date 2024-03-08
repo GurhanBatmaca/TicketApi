@@ -18,23 +18,23 @@ public class ActivityController: ControllerBase
     }
 
     [HttpGet]
-    [Route("All")]
+    [Route("all")]
     public async Task<IActionResult> All()
     {
         var activities = await _activityService.GetAll();
-        return Ok(activities);
+        return Ok( new { Activities = activities } );
     }
 
     [HttpGet]
-    [Route("AllWithCategories")]
+    [Route("allWithCategories")]
     public async Task<IActionResult> AllWithCategories()
     {
         var activities = await _activityService.GetAllWithCategories();
-        return Ok(activities);
+        return Ok( new { Activities = activities } );
     }
 
     [HttpGet]
-    [Route("Activity/{id}")]
+    [Route("activity/{id}")]
     public async Task<IActionResult> ActivityDetails(int id)
     {
         var activity = await _activityService.GetById(id);
@@ -45,7 +45,7 @@ public class ActivityController: ControllerBase
         }
         else
         {
-            return BadRequest( new { Error = "ActivityId hatası" } );
+            return BadRequest( new { Error = "Activity id hatası" } );
         }
     }
 }

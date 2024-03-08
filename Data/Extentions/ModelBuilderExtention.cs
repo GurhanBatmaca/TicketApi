@@ -17,14 +17,14 @@ public static class ModelBuilderExtention
         );
 
         modelBuilder.Entity<Address>().HasData(
-            new Address {Id=1,Title="Harbiye",City="İstanbul",Country="Türkiye",ImageUrl=""},
-            new Address {Id=2,Title="Galata Port",City="İstanbul",Country="Türkiye",ImageUrl=""},
-            new Address {Id=3,Title="Fuar Kültürpark",City="İzmir",Country="Türkiye",ImageUrl=""},
-            new Address {Id=4,Title="Rockefeller Center",City="New York",Country="USA",ImageUrl=""},
+            new Address {Id=1,Title="Harbiye",CityId=34,Url="harbiye",ImageUrl=""},
+            new Address {Id=2,Title="Galata Port",CityId=34,Url="galata-port",ImageUrl=""},
+            new Address {Id=3,Title="Fuar Kültürpark",CityId=35,Url="fuar-kulturpark",ImageUrl=""},
+            new Address {Id=4,Title="Ankara Kültürpark",CityId=6,Url="ankara-kulturpark",ImageUrl=""},
 
-            new Address {Id=5,Title="İstanbul Devlet Tiyatrosu",City="İstanbul",Country="Türkiye",ImageUrl=""},
-            new Address {Id=6,Title="Ankara Sanat Tiyatrosu",City="Ankara",Country="Türkiye",ImageUrl=""},
-            new Address {Id=7,Title="Cinetime Sinemaları",City="İstanbul",Country="Türkiye",ImageUrl=""}
+            new Address {Id=5,Title="İstanbul Devlet Tiyatrosu",CityId=34,ImageUrl=""},
+            new Address {Id=6,Title="Ankara Sanat Tiyatrosu",CityId=6,ImageUrl=""},
+            new Address {Id=7,Title="Cinetime Sinemaları",CityId=34,ImageUrl=""}
         );
 
         modelBuilder.Entity<Artor>().HasData(
@@ -162,6 +162,14 @@ public static class ModelBuilderExtention
 
             new TicketArtor {TicketId=10,ArtorId=12},
             new TicketArtor {TicketId=10,ArtorId=11}
+        );
+
+        modelBuilder.Entity<City>().HasData(
+            new City {Id = 1 ,PlateNumber = 1,Name="Adana",Url="adana",ImageUrl=""},
+            new City {Id = 6 ,PlateNumber = 6,Name="Ankara",Url="ankara",ImageUrl=""},
+            new City {Id = 7 ,PlateNumber = 7,Name="Antalya",Url="antalya",ImageUrl=""},
+            new City {Id = 34 ,PlateNumber = 6,Name="İstanbul",Url="istanbul",ImageUrl=""},
+            new City {Id = 35 ,PlateNumber = 35,Name="İzmir",Url="izmir",ImageUrl=""}
         );
     }
 }

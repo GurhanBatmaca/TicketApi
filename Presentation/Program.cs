@@ -14,6 +14,7 @@ builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 
 builder.Services.AddScoped<ITicketService,TicketManager>();
 builder.Services.AddScoped<IActivityService,ActivityManager>();
+builder.Services.AddScoped<IAddressService,AddressManager>();
 
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 

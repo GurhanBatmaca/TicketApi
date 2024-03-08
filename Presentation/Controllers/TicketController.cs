@@ -20,7 +20,7 @@ public class TicketController: ControllerBase
     }
 
     [HttpGet]
-    [Route("All")]
+    [Route("all")]
     public async Task<IActionResult> All(int page=1)
     {
         var ticketList = await _ticketService.GetAll(page,PageSize);
@@ -31,7 +31,7 @@ public class TicketController: ControllerBase
     }
 
     [HttpGet]
-    [Route("AllWithDetails")]
+    [Route("allWithDetails")]
     public async Task<IActionResult> AllWithDetails(int page=1)
     {
         var ticketList = await _ticketService.GetAllWithDetails(page,PageSize);
@@ -43,7 +43,7 @@ public class TicketController: ControllerBase
 
 
     [HttpGet]
-    [Route("Filter")]
+    [Route("filter")]
     public async Task<IActionResult> Filter([FromQuery] FilterModel model,int page=1)
     {
         var ticketList = await _ticketService.GetFilterResult(model,page,PageSize);
@@ -55,7 +55,7 @@ public class TicketController: ControllerBase
     }
 
     [HttpGet]
-    [Route("FilterWithDetails")]
+    [Route("filterWithDetails")]
     public async Task<IActionResult> FilterWithDetails([FromQuery] FilterModel model,int page=1)
     {
         var ticketList = await _ticketService.GetFilterResultWithDetails(model,page,PageSize);
@@ -68,7 +68,7 @@ public class TicketController: ControllerBase
 
 
     [HttpGet]
-    [Route("Search")]
+    [Route("search")]
     public async Task<IActionResult> Search([FromQuery] SearchModel model,int page=1)
     {
         var ticketList = await _ticketService.GetSearchResult(model,page,PageSize);
@@ -80,7 +80,7 @@ public class TicketController: ControllerBase
     }
 
     [HttpGet]
-    [Route("SearchWithDetails")]
+    [Route("searchWithDetails")]
     public async Task<IActionResult> SearchWithDetails([FromQuery] SearchModel model,int page=1)
     {
         var ticketList = await _ticketService.GetSearchResultWithDetails(model,page,PageSize);
@@ -93,7 +93,7 @@ public class TicketController: ControllerBase
 
 
     [HttpGet]
-    [Route("Ticket/{id}")]
+    [Route("ticket/{id}")]
     public async Task<IActionResult> TicketDetails(int id)
     {
         var ticket = await _ticketService.GetById(id);

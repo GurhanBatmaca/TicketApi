@@ -12,6 +12,7 @@ public class StoreContext: DbContext
     public DbSet<Address> Addresses { get; set; }
     public DbSet<Artor> Artors { get; set; }
     public DbSet<Category> Categories { get; set; }
+    public DbSet<City> Cities { get; set; }
     public DbSet<Ticket> Tickets { get; set; }
     public DbSet<Work> Works { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,6 +25,7 @@ public class StoreContext: DbContext
         modelBuilder.Entity<Address>().HasKey(e=>e.Id);
         modelBuilder.Entity<Artor>().HasKey(e=>e.Id);
         modelBuilder.Entity<Category>().HasKey(e=>e.Id);
+        modelBuilder.Entity<City>().HasKey(e=>e.Id);
         modelBuilder.Entity<Ticket>().HasKey(e=>e.Id);
         modelBuilder.Entity<Work>().HasKey(e=>e.Id);
 
