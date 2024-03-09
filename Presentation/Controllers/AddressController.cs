@@ -50,4 +50,29 @@ public class AddressController: ControllerBase
         }
     }
 
+    [HttpGet]
+    [Route("cities")]
+    public async Task<IActionResult> Cities()
+    {
+        var cities = await _addressService.GetCities();
+        return Ok( new { Cities = cities } );
+
+    }
+
+    [HttpGet]
+    [Route("cities/city/{id}")]
+    public async Task<IActionResult> CityDetails(int id)
+    {
+        var city = await _addressService.GetCityById(id);
+
+        if(!string.IsNullOrEmpty(city!.Name))
+        {
+            return Ok( new { City = city } );
+        }
+        else
+        {
+            return BadRequest( new { Error = "City id hatası" } );
+        }
+    }
+
 }

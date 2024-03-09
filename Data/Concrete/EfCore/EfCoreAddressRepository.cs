@@ -51,8 +51,6 @@ public class EfCoreAddressRepository: EfCoreGenericRepository<Address>,IAddressR
             return new AddressDTO();
         }
 
-        
-
         var addressDTO = new AddressDTO {
             Title = address.Title,
             ImageUrl = address.ImageUrl,
@@ -69,4 +67,33 @@ public class EfCoreAddressRepository: EfCoreGenericRepository<Address>,IAddressR
         return addressDTO;
     }
 
+    public async Task<List<CityDTO>> GetCities()
+    {
+        var citiyList = Context!.Cities.AsQueryable();
+
+        if(citiyList is null)
+        {
+            return [];
+        }
+
+        var cities = citiyList.Select(e => _mapper!.Map<CityDTO>(e));
+
+        return await cities.ToListAsync();
+    }
+
+    public async Task<CityDTO> GetCityById(int id)
+    {
+        var address = await Context!.Addresses
+                                    .Include(e=> e.City)
+                                    .FirstOrDefaultAsync(e => e.City!.Id == id);
+
+        if(address is null)
+        {
+            return new CityDTO();
+        }
+
+        var cityDTO = _mapper!.Map<CityDTO>(address.City);
+
+        return cityDTO;
+    }
 }

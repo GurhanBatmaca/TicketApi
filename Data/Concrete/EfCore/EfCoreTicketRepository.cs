@@ -472,6 +472,5 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
         };
 
         return ticketDTO;
-
     }
 }

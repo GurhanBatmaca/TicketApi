@@ -40,4 +40,14 @@ public class AddressManager : IAddressService
     {
         return await _unitOfWork!.Addresses.GetById(id);
     }
+
+    public async Task<List<CityDTO>> GetCities()
+    {
+        return await _unitOfWork!.Addresses.GetCities();
+    }
+
+    public async Task<CityDTO> GetCityById(int id)
+    {
+        return await _unitOfWork!.Addresses.GetCityById(id);
+    }
 }
