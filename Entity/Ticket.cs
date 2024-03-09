@@ -6,10 +6,10 @@ public class Ticket
     public int SeatNumber { get; set; }
     public int Limit { get; set; }
     public string Name { get; set; } = string.Empty;
-    public string Url { get; set; } = string.Empty;
     public double Price { get; set; }
     public string ImageUrl { get; set; } = string.Empty;
     public DateTime EventDate { get; set; }
+    public string Url { get; set; } = string.Empty;
 
     public int AddressId { get; set; }
     public Address? Address { get; set; }

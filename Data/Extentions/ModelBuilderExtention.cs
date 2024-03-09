@@ -168,7 +168,7 @@ public static class ModelBuilderExtention
             new City {Id = 1 ,PlateNumber = 1,Name="Adana",Url="adana",ImageUrl=""},
             new City {Id = 6 ,PlateNumber = 6,Name="Ankara",Url="ankara",ImageUrl=""},
             new City {Id = 7 ,PlateNumber = 7,Name="Antalya",Url="antalya",ImageUrl=""},
-            new City {Id = 34 ,PlateNumber = 6,Name="İstanbul",Url="istanbul",ImageUrl=""},
+            new City {Id = 34 ,PlateNumber = 34,Name="İstanbul",Url="istanbul",ImageUrl=""},
             new City {Id = 35 ,PlateNumber = 35,Name="İzmir",Url="izmir",ImageUrl=""}
         );
     }
