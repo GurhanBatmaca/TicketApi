@@ -23,22 +23,32 @@ public class TicketController: ControllerBase
     [Route("all")]
     public async Task<IActionResult> All(int page=1)
     {
-        var ticketList = await _ticketService.GetAll(page,PageSize);
+        var tickets = await _ticketService.GetAll(page,PageSize);
         var totalItems = await _ticketService.GetAllCount();      
         var pageInfo = new PageInfo {TotalItems=totalItems,ItemPerPage=PageSize,CurrentPage=page,};
 
-        return Ok( new { Tickects = ticketList, PageInfo = pageInfo } );
+        if(page > pageInfo.TotalPages)
+        {
+            return BadRequest( new { Error = "İndex hatası,liste boyutu aşıldı." } );
+        }
+
+        return Ok( new { Tickects = tickets, PageInfo = pageInfo } );
     }
 
     [HttpGet]
     [Route("allWithDetails")]
     public async Task<IActionResult> AllWithDetails(int page=1)
     {
-        var ticketList = await _ticketService.GetAllWithDetails(page,PageSize);
+        var tickets = await _ticketService.GetAllWithDetails(page,PageSize);
         var totalItems = await _ticketService.GetAllWithDetailsCount();      
         var pageInfo = new PageInfo {TotalItems=totalItems,ItemPerPage=PageSize,CurrentPage=page,};
 
-        return Ok( new { Tickects = ticketList, PageInfo = pageInfo } );
+        if(page > pageInfo.TotalPages)
+        {
+            return BadRequest( new { Error = "İndex hatası,liste boyutu aşıldı." } );
+        }
+
+        return Ok( new { Tickects = tickets, PageInfo = pageInfo } );
     }
 
 
@@ -46,11 +56,16 @@ public class TicketController: ControllerBase
     [Route("filter")]
     public async Task<IActionResult> Filter([FromQuery] FilterModel model,int page=1)
     {
-        var ticketList = await _ticketService.GetFilterResult(model,page,PageSize);
+        var tickets = await _ticketService.GetFilterResult(model,page,PageSize);
         var totalItems = await _ticketService.GetFilterResultCount(model);
         var pageInfo = new PageInfo {TotalItems=totalItems,ItemPerPage=PageSize,CurrentPage=page,};
 
-        return Ok( new { Tickects = ticketList, PageInfo = pageInfo } );
+        if(page > pageInfo.TotalPages)
+        {
+            return BadRequest( new { Error = "İndex hatası,liste boyutu aşıldı." } );
+        }
+
+        return Ok( new { Tickects = tickets, PageInfo = pageInfo } );
 
     }
 
@@ -58,11 +73,16 @@ public class TicketController: ControllerBase
     [Route("filterWithDetails")]
     public async Task<IActionResult> FilterWithDetails([FromQuery] FilterModel model,int page=1)
     {
-        var ticketList = await _ticketService.GetFilterResultWithDetails(model,page,PageSize);
+        var tickets = await _ticketService.GetFilterResultWithDetails(model,page,PageSize);
         var totalItems = await _ticketService.GetFilterResultWithDetailsCount(model);
         var pageInfo = new PageInfo {TotalItems=totalItems,ItemPerPage=PageSize,CurrentPage=page,};
 
-        return Ok( new { Tickects = ticketList, PageInfo = pageInfo } );
+        if(page > pageInfo.TotalPages)
+        {
+            return BadRequest( new { Error = "İndex hatası,liste boyutu aşıldı." } );
+        }
+
+        return Ok( new { Tickects = tickets, PageInfo = pageInfo } );
 
     }
 
@@ -71,11 +91,16 @@ public class TicketController: ControllerBase
     [Route("search")]
     public async Task<IActionResult> Search([FromQuery] SearchModel model,int page=1)
     {
-        var ticketList = await _ticketService.GetSearchResult(model,page,PageSize);
+        var tickets = await _ticketService.GetSearchResult(model,page,PageSize);
         var totalItems = await _ticketService.GetSearchResultCount(model);
         var pageInfo = new PageInfo {TotalItems=totalItems,ItemPerPage=PageSize,CurrentPage=page,};
 
-        return Ok( new { Tickects = ticketList, PageInfo = pageInfo } );
+        if(page > pageInfo.TotalPages)
+        {
+            return BadRequest( new { Error = "İndex hatası,liste boyutu aşıldı." } );
+        }
+
+        return Ok( new { Tickects = tickets, PageInfo = pageInfo } );
 
     }
 
@@ -83,11 +108,16 @@ public class TicketController: ControllerBase
     [Route("searchWithDetails")]
     public async Task<IActionResult> SearchWithDetails([FromQuery] SearchModel model,int page=1)
     {
-        var ticketList = await _ticketService.GetSearchResultWithDetails(model,page,PageSize);
+        var tickets = await _ticketService.GetSearchResultWithDetails(model,page,PageSize);
         var totalItems = await _ticketService.GetSearchResultWithDetailsCount(model);
         var pageInfo = new PageInfo {TotalItems=totalItems,ItemPerPage=PageSize,CurrentPage=page,};
 
-        return Ok( new { Tickects = ticketList, PageInfo = pageInfo } );
+        if(page > pageInfo.TotalPages)
+        {
+            return BadRequest( new { Error = "İndex hatası,liste boyutu aşıldı." } );
+        }
+
+        return Ok( new { Tickects = tickets, PageInfo = pageInfo } );
 
     }
 
@@ -104,7 +134,7 @@ public class TicketController: ControllerBase
         }
         else
         {
-            return BadRequest( new { Error = "TicketId hatası" } );
+            return BadRequest( new { Error = "Ticket id hatası" } );
         }
     }
 
