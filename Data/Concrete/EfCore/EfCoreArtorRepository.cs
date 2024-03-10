@@ -49,4 +49,26 @@ public class EfCoreArtorRepository: EfCoreGenericRepository<Artor>,IArtorReposit
 
         return await artors.ToListAsync();
     }
+
+    public async Task<ArtorDTO> GetById(int id)
+    {
+        var artor = await Context!.Artors
+                                    .Include(e=>e.ArtorWorks)
+                                    .ThenInclude(e=> e.Work)
+                                    .FirstOrDefaultAsync(e=> e.Id == id);
+
+        if(artor is null)
+        {
+            return new ArtorDTO();
+        }
+
+        var artorDTO =  new ArtorDTO {
+            Name = artor.Name,
+            ImageUrl = artor.ImageUrl,
+            Url = artor.Url,
+            Works = artor.ArtorWorks.Select(i=> _mapper!.Map<WorkDTO>(i.Work)).ToList()
+        };
+
+        return artorDTO;
+    }
 }

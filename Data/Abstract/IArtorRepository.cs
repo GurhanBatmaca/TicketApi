@@ -7,4 +7,5 @@ public interface IArtorRepository : IRepository<Artor>
 {
     Task<List<ArtorSummaryDTO>> GetAll();
     Task<List<ArtorDTO>> GetAllWithWorks();
+    Task<ArtorDTO> GetById(int id);
 }

@@ -34,4 +34,20 @@ public class ArtorController: ControllerBase
         return Ok( new { Artors = artors } );
     }
 
+    [HttpGet]
+    [Route("artor/{id}")]
+    public async Task<IActionResult> ArtorDetails(int id)
+    {
+        var artor = await _artorService.GetById(id);
+
+        if(!string.IsNullOrEmpty(artor!.Name))
+        {
+            return Ok( new { Artor = artor } );
+        }
+        else
+        {
+            return BadRequest( new { Error = "Artor id hatası" } );
+        }
+    }
+
 }

@@ -39,5 +39,8 @@ public class ArtorManager : IArtorService
         return await _unitOfWork!.Artors.GetAllWithWorks();
     }
 
-
+    public async Task<ArtorDTO> GetById(int id)
+    {
+        return await _unitOfWork!.Artors.GetById(id);
+    }
 }
