@@ -1,10 +1,12 @@
 ﻿using Business;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation;
 
 [ApiController]
 [Route("api/activities")]
+[Authorize]
 public class ActivityController: ControllerBase
 {
 

@@ -18,9 +18,9 @@ public class AuthController: ControllerBase
         _configuration = configuration;
     }
 
-    [HttpGet]
+    [HttpPost]
     [Route("login")]
-    public async Task<IActionResult> Login([FromQuery]LoginModel model)
+    public async Task<IActionResult> Login([FromBody]LoginModel model)
     {
         if(await _signService.Login(model))
         {
