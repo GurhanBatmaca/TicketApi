@@ -1,0 +1,33 @@
+﻿using Business;
+using Microsoft.AspNetCore.Mvc;
+using Shared;
+
+namespace Presentation;
+
+[ApiController]
+[Route("api/auth")]
+public class AuthController: ControllerBase
+{
+
+    protected private ISignService _signService;
+    protected private IConfiguration _configuration;
+    public int PageSize => Int32.Parse(_configuration["PageSize"]!);
+    public AuthController(ISignService signService,IConfiguration configuration)
+    {
+        _signService = signService;
+        _configuration = configuration;
+    }
+
+    [HttpGet]
+    [Route("login")]
+    public async Task<IActionResult> Login([FromQuery]LoginModel model)
+    {
+        if(await _signService.Login(model))
+        {
+            return Ok(_signService.TokenModel);
+        }
+        
+        return BadRequest(_signService.Message);
+    }
+
+}

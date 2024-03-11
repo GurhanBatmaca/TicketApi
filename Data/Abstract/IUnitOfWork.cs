@@ -6,4 +6,6 @@ public interface IUnitOfWork: IDisposable
     IActivityRepository Activities {get;}
     IAddressRepository Addresses {get;}
     IArtorRepository Artors {get;}
+    ISignRepository Signs {get;}
+    IUserRepository Users {get;}
 }

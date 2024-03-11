@@ -43,6 +43,8 @@ builder.Services.AddScoped<ITicketService,TicketManager>();
 builder.Services.AddScoped<IActivityService,ActivityManager>();
 builder.Services.AddScoped<IAddressService,AddressManager>();
 builder.Services.AddScoped<IArtorService,ArtorManager>();
+builder.Services.AddScoped<ISignService,SignManager>();
+builder.Services.AddScoped<IUserService,UserManager>();
 
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 
