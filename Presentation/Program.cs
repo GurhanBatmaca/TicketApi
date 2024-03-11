@@ -1,6 +1,10 @@
+using System.Text;
 using Business;
 using Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Shared;
 
@@ -9,6 +13,29 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<StoreContext>(opt => {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("MsSqlConnectionString"),e=> e.MigrationsAssembly("Presentation"));
 });
+
+builder.Services.AddDbContext<IdentityContext>(opt => {
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("MsSqlConnectionString"),e=> e.MigrationsAssembly("Presentation"));
+});
+
+builder.Services.AddIdentity<AuthUser,IdentityRole>().AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
+
+builder.Services.Configure<IdentityOptions>(options => {
+    options.Password.RequireDigit = true; 
+    options.Password.RequireLowercase = true; 
+    options.Password.RequireUppercase = true; 
+    options.Password.RequiredLength = 6; 
+    options.Password.RequireNonAlphanumeric = true; 
+
+    options.Lockout.MaxFailedAccessAttempts = 5; 
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5); 
+    options.Lockout.AllowedForNewUsers = true; 
+
+    options.User.RequireUniqueEmail = true; 
+    options.SignIn.RequireConfirmedEmail = true; 
+    options.SignIn.RequireConfirmedPhoneNumber = false; 
+});
+
 
 builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 
@@ -30,6 +57,23 @@ builder.Services.AddCors(options =>
                 .AllowAnyMethod();
         }
     );
+});
+
+builder.Services.AddAuthentication(auth => {
+    auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options => {
+    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidAudience = builder.Configuration["JwtSettings:Audince"],
+        ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+        RequireExpirationTime = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"]!)),
+        ValidateIssuerSigningKey = true,
+        ValidateLifetime = true
+    };
 });
 
 builder.Services.AddControllers();
@@ -61,6 +105,8 @@ builder.Services.AddSwaggerGen(option =>
         }
     });
 });
+
+
 
 
 var app = builder.Build();
