@@ -129,4 +129,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+IdentitySeed.Seed(app,builder.Configuration);
+
 app.Run();
