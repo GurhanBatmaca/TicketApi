@@ -22,12 +22,13 @@ public class AuthController: ControllerBase
     [Route("login")]
     public async Task<IActionResult> Login([FromBody]LoginModel model)
     {
-        if(await _signService.Login(model))
+        if(!await _signService.Login(model))
         {
-            return Ok(_signService.TokenModel);
+            return BadRequest( new ErrorResponse { Error = _signService.Message! } );
         }
         
-        return BadRequest(_signService.Message);
+        return Ok( new SuccessResponse { Data = _signService.TokenModel! } );
+        
     }
 
 }

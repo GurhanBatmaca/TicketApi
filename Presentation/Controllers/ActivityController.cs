@@ -1,6 +1,7 @@
 ﻿using Business;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shared;
 
 namespace Presentation;
 
@@ -24,7 +25,7 @@ public class ActivityController: ControllerBase
     public async Task<IActionResult> All()
     {
         var activities = await _activityService.GetAll();
-        return Ok( new { Activities = activities } );
+        return Ok( new SuccessResponse { Data = activities } );
     }
 
     [HttpGet]
@@ -32,7 +33,7 @@ public class ActivityController: ControllerBase
     public async Task<IActionResult> AllWithCategories()
     {
         var activities = await _activityService.GetAllWithCategories();
-        return Ok( new { Activities = activities } );
+        return Ok( new SuccessResponse { Data = activities } );
     }
 
     [HttpGet]
@@ -41,13 +42,11 @@ public class ActivityController: ControllerBase
     {
         var activity = await _activityService.GetById(id);
 
-        if(!string.IsNullOrEmpty(activity!.Name))
+        if(string.IsNullOrEmpty(activity!.Name))
         {
-            return Ok( new { Activity = activity } );
+            return BadRequest( new ErrorResponse { Error = "Activity id hatası" } );
         }
-        else
-        {
-            return BadRequest( new { Error = "Activity id hatası" } );
-        }
+        return Ok( new SuccessResponse { Data = activity } );
+
     }
 }

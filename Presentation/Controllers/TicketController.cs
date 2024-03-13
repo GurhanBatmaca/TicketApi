@@ -29,10 +29,10 @@ public class TicketController: ControllerBase
 
         if(page > pageInfo.TotalPages)
         {
-            return BadRequest( new { Error = "İndex hatası,liste boyutu aşıldı." } );
+            return BadRequest( new ErrorResponse { Error = "İndex hatası,liste boyutu aşıldı." } );
         }
 
-        return Ok( new { Tickects = tickets, PageInfo = pageInfo } );
+        return Ok( new SuccessResponse{ Data = tickets!, PageInfo = pageInfo } );
     }
 
     [HttpGet]
@@ -45,10 +45,10 @@ public class TicketController: ControllerBase
 
         if(page > pageInfo.TotalPages)
         {
-            return BadRequest( new { Error = "İndex hatası,liste boyutu aşıldı." } );
+            return BadRequest( new ErrorResponse { Error = "İndex hatası,liste boyutu aşıldı." } );
         }
 
-        return Ok( new { Tickects = tickets, PageInfo = pageInfo } );
+        return Ok( new SuccessResponse { Data = tickets!, PageInfo = pageInfo } );
     }
 
 
@@ -62,10 +62,10 @@ public class TicketController: ControllerBase
 
         if(page > pageInfo.TotalPages)
         {
-            return BadRequest( new { Error = "İndex hatası,liste boyutu aşıldı." } );
+            return BadRequest( new ErrorResponse { Error = "İndex hatası,liste boyutu aşıldı." } );
         }
 
-        return Ok( new { Tickects = tickets, PageInfo = pageInfo } );
+        return Ok( new SuccessResponse { Data = tickets, PageInfo = pageInfo } );
 
     }
 
@@ -79,10 +79,10 @@ public class TicketController: ControllerBase
 
         if(page > pageInfo.TotalPages)
         {
-            return BadRequest( new { Error = "İndex hatası,liste boyutu aşıldı." } );
+            return BadRequest( new ErrorResponse { Error = "İndex hatası,liste boyutu aşıldı." } );
         }
 
-        return Ok( new { Tickects = tickets, PageInfo = pageInfo } );
+        return Ok( new SuccessResponse { Data = tickets, PageInfo = pageInfo } );
 
     }
 
@@ -97,10 +97,10 @@ public class TicketController: ControllerBase
 
         if(page > pageInfo.TotalPages)
         {
-            return BadRequest( new { Error = "İndex hatası,liste boyutu aşıldı." } );
+            return BadRequest( new ErrorResponse { Error = "İndex hatası,liste boyutu aşıldı." } );
         }
 
-        return Ok( new { Tickects = tickets, PageInfo = pageInfo } );
+        return Ok( new SuccessResponse { Data = tickets, PageInfo = pageInfo } );
 
     }
 
@@ -114,10 +114,10 @@ public class TicketController: ControllerBase
 
         if(page > pageInfo.TotalPages)
         {
-            return BadRequest( new { Error = "İndex hatası,liste boyutu aşıldı." } );
+            return BadRequest( new ErrorResponse { Error = "İndex hatası,liste boyutu aşıldı." } );
         }
 
-        return Ok( new { Tickects = tickets, PageInfo = pageInfo } );
+        return Ok( new SuccessResponse { Data = tickets, PageInfo = pageInfo } );
 
     }
 
@@ -128,14 +128,12 @@ public class TicketController: ControllerBase
     {
         var ticket = await _ticketService.GetById(id);
 
-        if(!string.IsNullOrEmpty(ticket!.Name))
+        if(string.IsNullOrEmpty(ticket!.Name))
         {
-            return Ok( new { Ticket = ticket } );
+            return BadRequest( new ErrorResponse { Error = "Ticket id hatası" } );
         }
-        else
-        {
-            return BadRequest( new { Error = "Ticket id hatası" } );
-        }
+        return Ok( new SuccessResponse { Data = ticket } );
+
     }
 
 }

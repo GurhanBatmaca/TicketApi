@@ -1,5 +1,6 @@
 ﻿using Business;
 using Microsoft.AspNetCore.Mvc;
+using Shared;
 
 namespace Presentation;
 
@@ -23,7 +24,7 @@ public class ArtorController: ControllerBase
     public async Task<IActionResult> All()
     {
         var artors = await _artorService.GetAll();
-        return Ok( new { Artors = artors } );
+        return Ok( new SuccessResponse { Data = artors } );
     }
 
     [HttpGet]
@@ -31,7 +32,7 @@ public class ArtorController: ControllerBase
     public async Task<IActionResult> AllWithWorks()
     {
         var artors = await _artorService.GetAllWithWorks();
-        return Ok( new { Artors = artors } );
+        return Ok( new SuccessResponse { Data = artors } );
     }
 
     [HttpGet]
@@ -40,14 +41,12 @@ public class ArtorController: ControllerBase
     {
         var artor = await _artorService.GetById(id);
 
-        if(!string.IsNullOrEmpty(artor!.Name))
+        if(string.IsNullOrEmpty(artor!.Name))
         {
-            return Ok( new { Artor = artor } );
+            return BadRequest( new ErrorResponse { Error = "Artor id hatası" } );
+            
         }
-        else
-        {
-            return BadRequest( new { Error = "Artor id hatası" } );
-        }
+        return Ok( new SuccessResponse { Data = artor } );
     }
 
 }

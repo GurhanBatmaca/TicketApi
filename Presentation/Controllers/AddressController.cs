@@ -28,10 +28,10 @@ public class AddressController: ControllerBase
 
         if(page > pageInfo.TotalPages)
         {
-            return BadRequest( new { Error = "İndex hatası,Liste boyutu aşıldı." } );
+            return BadRequest( new ErrorResponse { Error = "İndex hatası,Liste boyutu aşıldı." } );
         }
 
-        return Ok( new { Addresses = addresses, PageInfo = pageInfo } );
+        return Ok( new SuccessResponse { Data = addresses, PageInfo = pageInfo } );
     }
 
     [HttpGet]
@@ -40,14 +40,13 @@ public class AddressController: ControllerBase
     {
         var address = await _addressService.GetById(id);
 
-        if(!string.IsNullOrEmpty(address!.Title))
+        if(string.IsNullOrEmpty(address!.Title))
         {
-            return Ok( new { Address = address } );
+            return BadRequest( new ErrorResponse { Error = "Address id hatası" } );
         }
-        else
-        {
-            return BadRequest( new { Error = "Address id hatası" } );
-        }
+
+        return Ok( new SuccessResponse { Data = address } );
+
     }
 
     [HttpGet]
@@ -55,7 +54,7 @@ public class AddressController: ControllerBase
     public async Task<IActionResult> Cities()
     {
         var cities = await _addressService.GetCities();
-        return Ok( new { Cities = cities } );
+        return Ok( new SuccessResponse { Data = cities } );
 
     }
 
@@ -65,14 +64,12 @@ public class AddressController: ControllerBase
     {
         var city = await _addressService.GetCityById(id);
 
-        if(!string.IsNullOrEmpty(city!.Name))
+        if(string.IsNullOrEmpty(city!.Name))
         {
-            return Ok( new { City = city } );
+            return BadRequest( new ErrorResponse { Error = "City id hatası" } );
         }
-        else
-        {
-            return BadRequest( new { Error = "City id hatası" } );
-        }
+        
+        return Ok( new SuccessResponse { Data = city } );
     }
 
 }

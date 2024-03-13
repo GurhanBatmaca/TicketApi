@@ -79,6 +79,10 @@ builder.Services.AddAuthentication(auth => {
 });
 
 builder.Services.AddControllers();
+                // .AddJsonOptions(options => options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull);  
+                // null response obje prop'u önlemek için
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(option =>
 {
