@@ -1,4 +1,6 @@
-﻿namespace Data;
+﻿using Shared;
+
+namespace Data;
 
 public interface IUserRepository
 {
@@ -6,4 +8,5 @@ public interface IUserRepository
     Task<bool> CheckPassword(AuthUser user,string password);
     Task<IList<string>> GetRoles(AuthUser user);
     Task<bool> IsEmailConfirmed(AuthUser user);
+    Task<bool> Create(RegisterModel model);
 }

@@ -22,6 +22,12 @@ public class SignManager : ISignService
 
     public async Task<bool> Login(LoginModel model)
     {
+        if(!CheckInput.IsValid(model.Email!) || !CheckInput.IsValid(model.Password!))
+        {
+            Message = "Kullanılamaz karater (_-*-or-and-'-).";
+            return false;
+        }
+
         var user = await _unitOfWork!.Users.FindByEmail(model.Email!);
 
         if(user == null)

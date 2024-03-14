@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Shared;
 
 namespace Data;
 
@@ -19,6 +20,19 @@ public class EfCoreUserRepository: IUserRepository
     public async Task<bool> CheckPassword(AuthUser user,string password)
     {
         return await _userManager.CheckPasswordAsync(user,password);
+    }
+
+    public async Task<bool> Create(RegisterModel model)
+    {
+        var user = new AuthUser {
+            UserName = model.UserName,
+            FirstName = model.FirstName!,
+            LastName = model.LastName!,
+            Email = model.Email
+        };
+        var result = await _userManager.CreateAsync(user,model.Password!);
+        return result.Succeeded;
+
     }
 
     public async Task<AuthUser?> FindByEmail(string email)
