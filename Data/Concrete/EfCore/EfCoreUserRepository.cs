@@ -40,6 +40,11 @@ public class EfCoreUserRepository: IUserRepository
         return await _userManager!.FindByEmailAsync(email);
     }
 
+    public async Task<AuthUser?> FindByName(string userName)
+    {
+        return await _userManager!.FindByNameAsync(userName);
+    }
+
     public async Task<IList<string>> GetRoles(AuthUser user)
     {
         return await _userManager.GetRolesAsync(user);

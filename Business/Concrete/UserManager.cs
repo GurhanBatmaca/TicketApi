@@ -28,13 +28,29 @@ public class UserManager : IUserService
             return false;
         }
 
+        var checkEmail = await _unitOfWork!.Users.FindByEmail(model.Email);
+
+        if(checkEmail is not null)
+        {
+            Message = "Bu e-posta adresi ile daha önce üye olunmuş.";
+            return false;
+        }
+
+        var checkUserName = await _unitOfWork!.Users.FindByName(model.UserName);
+
+        if(checkUserName is not null)
+        {
+            Message = "Bu kullanıcı adı daha önce alınmış.";
+            return false;
+        }
+
         if(!await _unitOfWork!.Users.Create(model))
         {
             Message = "Şifre en az 6 karater uzunluğunda,büyük küçük harf ve alfanümerik olmalıdır.";
             return false;
         }
 
-        Message = "Üyelik oluşturuldu,lütfen e-pota adresinize gelen link aracılığı ile üyeliğinizi onaylayın.";
+        Message = "Üyelik oluşturuldu.";
         return true;
     }
 }

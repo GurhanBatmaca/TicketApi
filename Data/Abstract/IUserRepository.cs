@@ -9,4 +9,5 @@ public interface IUserRepository
     Task<IList<string>> GetRoles(AuthUser user);
     Task<bool> IsEmailConfirmed(AuthUser user);
     Task<bool> Create(RegisterModel model);
+    Task<AuthUser?> FindByName(string userName);
 }
