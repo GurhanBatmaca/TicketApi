@@ -14,14 +14,12 @@ public class UserManager : IUserService
     protected private IUnitOfWork? _unitOfWork;
     protected private IConfiguration _configuration;
     private readonly IHttpContextAccessor _accessor;
-    private readonly LinkGenerator _generator;
     private readonly IEmailSender _emailSender;
-    public UserManager(IUnitOfWork? unitOfWork,IConfiguration configuration,IHttpContextAccessor accessor, LinkGenerator generator,IEmailSender emailSender)
+    public UserManager(IUnitOfWork? unitOfWork,IConfiguration configuration,IHttpContextAccessor accessor,IEmailSender emailSender)
     {
         _unitOfWork = unitOfWork;
         _configuration = configuration;
         _accessor = accessor;
-        _generator = generator;
         _emailSender = emailSender;
     }
     public string? Message { get ; set ; }
@@ -106,6 +104,31 @@ public class UserManager : IUserService
         }
 
         Message = "Üyelik onaylandı";
+        return true;
+    }
+
+    public async Task<bool> FargotPassword(string email)
+    {
+        if(string.IsNullOrEmpty(email))
+        {
+            Message = "Eksik url hatası.";
+            return false;
+        }
+
+        var user = await _unitOfWork!.Users.FindByEmail(email);
+
+        if(user is null)
+        {
+            Message = "Kullanıcı bulunamadı.";
+            return false;
+        }
+
+        var token = await _unitOfWork.Users.GeneratePasswordResetToken(user);
+        var validToken = UrlConverter.EncodeUrl(token);
+
+        await _emailSender.SendEmailAsync(user.Email!,"Şifre sıfırlama",$"Şifre sıfırlama kodu: {validToken}");
+
+        Message = "Sıfırlama kodu e-posta adresine gönderildi.";
         return true;
     }
 }

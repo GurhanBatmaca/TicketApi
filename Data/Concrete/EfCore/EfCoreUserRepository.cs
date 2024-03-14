@@ -59,6 +59,11 @@ public class EfCoreUserRepository: IUserRepository
         return await _userManager.GenerateEmailConfirmationTokenAsync(user);
     }
 
+    public async Task<string> GeneratePasswordResetToken(AuthUser user)
+    {
+        return await _userManager.GeneratePasswordResetTokenAsync(user);
+    }
+
     public async Task<IList<string>> GetRoles(AuthUser user)
     {
         return await _userManager.GetRolesAsync(user);

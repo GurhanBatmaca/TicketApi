@@ -1,4 +1,5 @@
-﻿using Business;
+﻿using System.ComponentModel.DataAnnotations;
+using Business;
 using Microsoft.AspNetCore.Mvc;
 using Shared;
 
@@ -58,12 +59,29 @@ public class AuthController: ControllerBase
     [Route("confirmemail/{token}&{userId}")]
     public async Task<IActionResult> ConfirmEmail(string token,string userId)
     {
-        if(string.IsNullOrEmpty(token) || string.IsNullOrEmpty(userId))
+        if(!ModelState.IsValid)
         {
             return BadRequest( new ErrorResponse { Error = "Lütfen eksik alanları doldurunuz." } );
         }
         
         if(!await _userService.ConfirmEmail(token,userId))
+        {
+            return BadRequest( new ErrorResponse { Error = _userService.Message! } );
+        }
+        
+        return Ok( new SuccessResponse { Message = _userService.Message! } );
+    }
+
+    [HttpGet]
+    [Route("fargotpassword/{email}")]
+    public async Task<IActionResult> FargotPassword([EmailAddress]string email)
+    {
+        if(!ModelState.IsValid)
+        {
+            return BadRequest( new ErrorResponse { Error = "Lütfen eksik alanları doldurunuz." } );
+        }
+        
+        if(!await _userService.FargotPassword(email))
         {
             return BadRequest( new ErrorResponse { Error = _userService.Message! } );
         }

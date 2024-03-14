@@ -14,4 +14,5 @@ public interface IUserRepository
     Task AddToRole(AuthUser user,string role);
     Task<bool> ConfirmEmail(AuthUser user,string token);
     Task<AuthUser?> FindById(string id);
+    Task<string> GeneratePasswordResetToken(AuthUser user);
 }
