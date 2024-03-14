@@ -8,6 +8,10 @@ public interface IUserRepository
     Task<bool> CheckPassword(AuthUser user,string password);
     Task<IList<string>> GetRoles(AuthUser user);
     Task<bool> IsEmailConfirmed(AuthUser user);
-    Task<bool> Create(RegisterModel model);
+    Task<bool> Create(AuthUser user,string password);
     Task<AuthUser?> FindByName(string userName);
+    Task<string> GenerateEmailConfirmationToken(AuthUser user);
+    Task AddToRole(AuthUser user,string role);
+    Task<bool> ConfirmEmail(AuthUser user,string token);
+    Task<AuthUser?> FindById(string id);
 }

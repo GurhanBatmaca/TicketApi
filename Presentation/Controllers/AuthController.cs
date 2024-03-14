@@ -54,4 +54,21 @@ public class AuthController: ControllerBase
         
     }
 
+    [HttpGet]
+    [Route("confirmemail/{token}&{userId}")]
+    public async Task<IActionResult> ConfirmEmail(string token,string userId)
+    {
+        if(string.IsNullOrEmpty(token) || string.IsNullOrEmpty(userId))
+        {
+            return BadRequest( new ErrorResponse { Error = "Lütfen eksik alanları doldurunuz." } );
+        }
+        
+        if(!await _userService.ConfirmEmail(token,userId))
+        {
+            return BadRequest( new ErrorResponse { Error = _userService.Message! } );
+        }
+        
+        return Ok( new SuccessResponse { Message = _userService.Message! } );
+    }
+
 }

@@ -46,6 +46,16 @@ builder.Services.AddScoped<IArtorService,ArtorManager>();
 builder.Services.AddScoped<ISignService,SignManager>();
 builder.Services.AddScoped<IUserService,UserManager>();
 
+builder.Services.AddScoped<IEmailSender,SmtpEmailSender>( i => 
+    new SmtpEmailSender(
+        builder.Configuration["EmailSender:Host"]!,
+        builder.Configuration.GetValue<int>("EmailSender:Port"),
+        builder.Configuration.GetValue<bool>("EmailSender:EnableSSL"),
+        builder.Configuration["EmailSender:UserName"]!,
+        builder.Configuration["EmailSender:Password"]!
+    )
+);
+
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 
 builder.Services.AddCors(options =>

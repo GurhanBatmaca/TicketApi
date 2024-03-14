@@ -100,9 +100,9 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
 
     public async Task<List<TicketSummaryDTO>> GetFilterResult(FilterModel model, int page, int pageSize)
     {
-        model.Activity = UrlConverter.Convert(model.Activity!);
-        model.Address = UrlConverter.Convert(model.Address!);
-        model.Artor = UrlConverter.Convert(model.Artor!);
+        model.Activity = UrlConverter.Edit(model.Activity!);
+        model.Address = UrlConverter.Edit(model.Address!);
+        model.Artor = UrlConverter.Edit(model.Artor!);
 
         var ticketList = Context!.Tickets
                                 .Include(e=> e.Address)
@@ -145,9 +145,9 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
 
     public async Task<int> GetFilterResultCount(FilterModel model)
     {
-        model.Activity = UrlConverter.Convert(model.Activity!);
-        model.Address = UrlConverter.Convert(model.Address!);
-        model.Artor = UrlConverter.Convert(model.Artor!);
+        model.Activity = UrlConverter.Edit(model.Activity!);
+        model.Address = UrlConverter.Edit(model.Address!);
+        model.Artor = UrlConverter.Edit(model.Artor!);
 
         var ticketList = Context!.Tickets
                                 .Include(e=> e.Address)
@@ -180,9 +180,9 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
 
     public async Task<List<TicketDTO>> GetFilterResultWithDetails(FilterModel model, int page, int pageSize)
     {
-        model.Activity = UrlConverter.Convert(model.Activity!);
-        model.Address = UrlConverter.Convert(model.Address!);
-        model.Artor = UrlConverter.Convert(model.Artor!);
+        model.Activity = UrlConverter.Edit(model.Activity!);
+        model.Address = UrlConverter.Edit(model.Address!);
+        model.Artor = UrlConverter.Edit(model.Artor!);
 
         var ticketList = Context!.Tickets
                                 .Include(e=> e.Address)
@@ -238,9 +238,9 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
 
     public async Task<int> GetFilterResultWithDetailsCount(FilterModel model)
     {
-        model.Activity = UrlConverter.Convert(model.Activity!);
-        model.Address = UrlConverter.Convert(model.Address!);
-        model.Artor = UrlConverter.Convert(model.Artor!);
+        model.Activity = UrlConverter.Edit(model.Activity!);
+        model.Address = UrlConverter.Edit(model.Address!);
+        model.Artor = UrlConverter.Edit(model.Artor!);
 
         var ticketList = Context!.Tickets
                                 .Include(e=> e.Address)
@@ -273,7 +273,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
 
     public async Task<List<TicketSummaryDTO>> GetSearchResult(SearchModel model,int page,int pageSize)
     {
-        model.Query = UrlConverter.Convert(model.Query);
+        model.Query = UrlConverter.Edit(model.Query);
 
         var ticketList = Context!.Tickets
                                 .Include(e=> e.Address)
@@ -314,7 +314,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
 
     public async Task<int> GetSearchResultCount(SearchModel model)
     {
-        model.Query = UrlConverter.Convert(model.Query);
+        model.Query = UrlConverter.Edit(model.Query);
 
         var ticketList = Context!.Tickets
                                 .Include(e=> e.Address)
@@ -344,7 +344,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
 
     public async Task<List<TicketDTO>> GetSearchResultWithDetails(SearchModel model, int page, int pageSize)
     {
-        model.Query = UrlConverter.Convert(model.Query);
+        model.Query = UrlConverter.Edit(model.Query);
 
         var ticketList = Context!.Tickets
                                 .Include(e=> e.Address)
@@ -399,7 +399,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
 
     public async Task<int> GetSearchResultWithDetailsCount(SearchModel model)
     {
-        model.Query = UrlConverter.Convert(model.Query);
+        model.Query = UrlConverter.Edit(model.Query);
 
         var ticketList = Context!.Tickets
                                 .Include(e=> e.Address)

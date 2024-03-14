@@ -1,6 +1,11 @@
-﻿using Data;
+﻿using System.Text;
+using Data;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Shared;
+using Shared.Helpers;
 
 namespace Business;
 
@@ -8,10 +13,16 @@ public class UserManager : IUserService
 {
     protected private IUnitOfWork? _unitOfWork;
     protected private IConfiguration _configuration;
-    public UserManager(IUnitOfWork? unitOfWork,IConfiguration configuration)
+    private readonly IHttpContextAccessor _accessor;
+    private readonly LinkGenerator _generator;
+    private readonly IEmailSender _emailSender;
+    public UserManager(IUnitOfWork? unitOfWork,IConfiguration configuration,IHttpContextAccessor accessor, LinkGenerator generator,IEmailSender emailSender)
     {
         _unitOfWork = unitOfWork;
         _configuration = configuration;
+        _accessor = accessor;
+        _generator = generator;
+        _emailSender = emailSender;
     }
     public string? Message { get ; set ; }
 
@@ -44,13 +55,57 @@ public class UserManager : IUserService
             return false;
         }
 
-        if(!await _unitOfWork!.Users.Create(model))
+        var user = new AuthUser {
+            UserName = model.UserName,
+            FirstName = model.FirstName!,
+            LastName = model.LastName!,
+            Email = model.Email
+        };
+
+        if(!await _unitOfWork!.Users.Create(user,model.Password))
         {
             Message = "Şifre en az 6 karater uzunluğunda,büyük küçük harf ve alfanümerik olmalıdır.";
             return false;
         }
 
         Message = "Üyelik oluşturuldu.";
+        await _unitOfWork.Users.AddToRole(user,"Customer");
+
+        var token = await _unitOfWork!.Users.GenerateEmailConfirmationToken(user);
+        var validToken = UrlConverter.EncodeUrl(token);
+
+        var baseUrl = $"{_accessor.HttpContext!.Request.Scheme}://{_accessor.HttpContext!.Request.Host}{_accessor.HttpContext!.Request.PathBase}";
+
+        await _emailSender.SendEmailAsync(user.Email!,"Üyelik onayı",$"Hesabınızı onaylamak için lütfen <a href='{baseUrl}/api/auth/confirmemail/{validToken}&{user.Id}'>linke</a> tıklayınız");
+
+        return true;
+    }
+
+    public async Task<bool> ConfirmEmail(string token,string userId)
+    {
+        if(string.IsNullOrEmpty(token) || string.IsNullOrEmpty(userId))
+        {
+            Message = "Eksik url hatası.";
+            return false;
+        }
+
+        var user = await _unitOfWork!.Users.FindById(userId);
+
+        if(user is null)
+        {
+            Message = "User id hatası.";
+            return false;
+        }
+
+        var validToken = UrlConverter.DecodeUrl(token);
+
+        if(!await _unitOfWork.Users.ConfirmEmail(user,validToken))
+        {
+            Message = "Token hatası.";
+            return false;
+        }
+
+        Message = "Üyelik onaylandı";
         return true;
     }
 }
