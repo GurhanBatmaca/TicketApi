@@ -15,4 +15,5 @@ public interface IUserRepository
     Task<bool> ConfirmEmail(AuthUser user,string token);
     Task<AuthUser?> FindById(string id);
     Task<string> GeneratePasswordResetToken(AuthUser user);
+    Task<bool> ResetPassword(AuthUser user,string token,string password);
 }

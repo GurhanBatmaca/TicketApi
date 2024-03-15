@@ -81,7 +81,24 @@ public class AuthController: ControllerBase
             return BadRequest( new ErrorResponse { Error = "Lütfen eksik alanları doldurunuz." } );
         }
         
-        if(!await _userService.FargotPassword(email))
+        if(!await _userService.GeneratePasswordResetToken(email))
+        {
+            return BadRequest( new ErrorResponse { Error = _userService.Message! } );
+        }
+        
+        return Ok( new SuccessResponse { Message = _userService.Message! } );
+    }
+
+    [HttpPost]
+    [Route("resetpassword")]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel model)
+    {
+        if(!ModelState.IsValid)
+        {
+            return BadRequest( new ErrorResponse { Error = "Lütfen eksik alanları doldurunuz." } );
+        }
+        
+        if(!await _userService.ResetPassword(model))
         {
             return BadRequest( new ErrorResponse { Error = _userService.Message! } );
         }

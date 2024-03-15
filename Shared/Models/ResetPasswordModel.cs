@@ -2,21 +2,11 @@
 
 namespace Shared;
 
-public class RegisterModel
+public class ResetPasswordModel
 {
-
     [Required]
-    [StringLength(20,MinimumLength = 3)]
-    public string? UserName { get; set; }
-
-    [Required]
-    [StringLength(20,MinimumLength = 3)]
-    public string? FirstName { get; set; }
+    public string? Token { get; set; }
     
-    [Required]
-    [StringLength(20,MinimumLength = 2)]
-    public string? LastName { get; set; }
-
     [Required]
     [EmailAddress]
     public string? Email { get; set; }

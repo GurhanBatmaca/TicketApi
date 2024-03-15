@@ -73,4 +73,10 @@ public class EfCoreUserRepository: IUserRepository
     {
         return await _userManager.IsEmailConfirmedAsync(user);
     }
+
+    public async Task<bool> ResetPassword(AuthUser user,string token,string password)
+    {
+        var result = await _userManager.ResetPasswordAsync(user,token,password);
+        return result.Succeeded;
+    }
 }

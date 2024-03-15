@@ -1,8 +1,5 @@
-﻿using System.Text;
-using Data;
+﻿using Data;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Shared;
 using Shared.Helpers;
@@ -107,7 +104,7 @@ public class UserManager : IUserService
         return true;
     }
 
-    public async Task<bool> FargotPassword(string email)
+    public async Task<bool> GeneratePasswordResetToken(string email)
     {
         if(string.IsNullOrEmpty(email))
         {
@@ -130,5 +127,33 @@ public class UserManager : IUserService
 
         Message = "Sıfırlama kodu e-posta adresine gönderildi.";
         return true;
+    }
+
+    public async Task<bool> ResetPassword(ResetPasswordModel model)
+    {
+        if(string.IsNullOrEmpty(model.Token) || string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Password) || string.IsNullOrEmpty(model.RePassword))
+        {
+            Message = "Zorunlu alan hatası.";
+            return false;
+        }
+
+        var user = await _unitOfWork!.Users.FindByEmail(model.Email!);
+        if(user is null)
+        {
+            Message = "E-posta hatası,kullanıcı bulunamadı.";
+            return false;
+        }
+
+        var validToken = UrlConverter.DecodeUrl(model.Token!);
+
+        if(!await _unitOfWork.Users.ResetPassword(user!,validToken,model.Password!))
+        {
+            Message = "Şifre en az 6 karater uzunluğunda,büyük küçük harf ve alfanümerik olmalıdır.";
+            return false;
+        }
+
+        Message = "Şifre değiştirldi.";
+        return true;
+
     }
 }
