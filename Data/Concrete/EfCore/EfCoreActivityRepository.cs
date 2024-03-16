@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Entity;
+﻿using Entity;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
@@ -7,11 +6,9 @@ namespace Data;
 
 public class EfCoreActivityRepository: EfCoreGenericRepository<Activity>,IActivityRepository
 {
-    public EfCoreActivityRepository(StoreContext context,IMapper? mapper):base(context)
+    public EfCoreActivityRepository(StoreContext context):base(context)
     {
-        _mapper = mapper;
     }
-    protected IMapper? _mapper;
     protected StoreContext? Context => _context as StoreContext;
 
     public async Task<List<ActivitySummaryDTO>> GetAll()

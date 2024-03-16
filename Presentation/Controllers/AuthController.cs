@@ -27,7 +27,7 @@ public class AuthController: ControllerBase
     {
         if(!ModelState.IsValid)
         {
-            return BadRequest( new ErrorResponse { Error = "Lütfen eksik alanları doldurunuz." } );
+            return BadRequest( new ErrorResponse() );
         }
         if(!await _signService.Login(model))
         {
@@ -43,7 +43,7 @@ public class AuthController: ControllerBase
     {
         if(!ModelState.IsValid)
         {
-            return BadRequest( new ErrorResponse { Error = "Lütfen eksik alanları doldurunuz." } );
+            return BadRequest( new ErrorResponse() );
         }
         
         if(!await _userService.Create(model))
@@ -61,7 +61,7 @@ public class AuthController: ControllerBase
     {
         if(!ModelState.IsValid)
         {
-            return BadRequest( new ErrorResponse { Error = "Lütfen eksik alanları doldurunuz." } );
+            return BadRequest( new ErrorResponse() );
         }
         
         if(!await _userService.ConfirmEmail(token,userId))
@@ -78,7 +78,7 @@ public class AuthController: ControllerBase
     {
         if(!ModelState.IsValid)
         {
-            return BadRequest( new ErrorResponse { Error = "Lütfen eksik alanları doldurunuz." } );
+            return BadRequest( new ErrorResponse() );
         }
         
         if(!await _userService.GeneratePasswordResetToken(email))
@@ -95,7 +95,7 @@ public class AuthController: ControllerBase
     {
         if(!ModelState.IsValid)
         {
-            return BadRequest( new ErrorResponse { Error = "Lütfen eksik alanları doldurunuz." } );
+            return BadRequest( new ErrorResponse() );
         }
         
         if(!await _userService.ResetPassword(model))

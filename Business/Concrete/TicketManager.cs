@@ -31,7 +31,24 @@ public class TicketManager : ITicketService
 
     public async Task<List<TicketSummaryDTO>?> GetAll(int page, int pageSize)
     {
-        return await _unitOfWork!.Tickets.GetAll(page,pageSize);
+        var ticketList =  await _unitOfWork!.Tickets.GetAll(page,pageSize);
+
+        if(ticketList is null)
+        {
+            return [];
+        }
+
+        var tickets = ticketList.Select(e => new TicketSummaryDTO {
+            Name = e.Name,
+            Price = e.Price,
+            EventDate = e.EventDate,
+            ImageUrl = e.ImageUrl,
+            Activity = e.Activity!.Name,
+            Address = e.Address!.Title,
+            City = e.Address.City!.Name
+        });
+
+        return tickets.ToList();
     }
 
     public async Task<int> GetAllCount()
@@ -39,19 +56,21 @@ public class TicketManager : ITicketService
         return await _unitOfWork!.Tickets.GetAllCount();
     }
 
-    public async Task<List<TicketDTO>?> GetAllWithDetails(int page, int pageSize)
-    {
-        return await _unitOfWork!.Tickets.GetAllWithDetails(page,pageSize);
-    }
-
-    public async Task<int> GetAllWithDetailsCount()
-    {
-        return await _unitOfWork!.Tickets.GetAllWithDetailsCount();
-    }
-
     public async Task<List<TicketSummaryDTO>> GetFilterResult(FilterModel model,int page,int pageSize)
     {
-        return await _unitOfWork!.Tickets.GetFilterResult(model,page,pageSize);
+        var ticketList = await _unitOfWork!.Tickets.GetFilterResult(model,page,pageSize);
+
+         var tickets = ticketList.Select(e => new TicketSummaryDTO {
+            Name = e.Name,
+            Price = e.Price,
+            EventDate = e.EventDate,
+            ImageUrl = e.ImageUrl,
+            Activity = e.Activity!.Name,
+            Address = e.Address!.Title,
+            City = e.Address.City!.Name
+        });
+
+        return tickets.ToList();
     }
 
     public async Task<int> GetFilterResultCount(FilterModel model)
@@ -59,19 +78,21 @@ public class TicketManager : ITicketService
         return await _unitOfWork!.Tickets.GetFilterResultCount(model);
     }
 
-    public async Task<List<TicketDTO>> GetFilterResultWithDetails(FilterModel model, int page, int pageSize)
-    {
-        return await _unitOfWork!.Tickets.GetFilterResultWithDetails(model,page,pageSize);
-    }
-
-    public async Task<int> GetFilterResultWithDetailsCount(FilterModel model)
-    {
-        return await _unitOfWork!.Tickets.GetFilterResultWithDetailsCount(model);
-    }
-
     public async Task<List<TicketSummaryDTO>> GetSearchResult(SearchModel model,int page,int pageSize)
     {
-        return await _unitOfWork!.Tickets.GetSearchResult(model,page,pageSize);
+        var ticketList = await _unitOfWork!.Tickets.GetSearchResult(model,page,pageSize);
+
+        var tickets = ticketList.Select(e => new TicketSummaryDTO {
+            Name = e.Name,
+            Price = e.Price,
+            EventDate = e.EventDate,
+            ImageUrl = e.ImageUrl,
+            Activity = e.Activity!.Name,
+            Address = e.Address!.Title,
+            City = e.Address.City!.Name
+        });
+
+        return tickets.ToList();
     }
 
     public async Task<int> GetSearchResultCount(SearchModel model)
@@ -79,18 +100,35 @@ public class TicketManager : ITicketService
         return await _unitOfWork!.Tickets.GetSearchResultCount(model);
     }
 
-    public async Task<List<TicketDTO>> GetSearchResultWithDetails(SearchModel model, int page, int pageSize)
-    {
-        return await _unitOfWork!.Tickets.GetSearchResultWithDetails(model,page,pageSize);
-    }
-
-    public async Task<int> GetSearchResultWithDetailsCount(SearchModel model)
-    {
-        return await _unitOfWork!.Tickets.GetSearchResultWithDetailsCount(model);
-    }
-
     public async Task<TicketDTO?> GetById(int id)
     {
-        return await _unitOfWork!.Tickets.GetById(id);
+        var ticket = await _unitOfWork!.Tickets.GetById(id);
+
+        var ticketDTO = new TicketDTO
+        {
+            Name = ticket!.Name,
+            Price = ticket.Price,
+            Url = ticket.Url,
+            EventDate = ticket.EventDate,
+            ImageUrl = ticket.ImageUrl,
+            Activity = new ActivityDTO {
+                Name = ticket.Activity!.Name,
+                Url = ticket.Activity.Url,
+                ImageUrl = ticket.Activity.ImageUrl,
+                // Categories = ticket.Activity.ActivityCategories.Select(i => _mapper!.Map<CategoryDTO>(i.Category)).ToList() 
+            },
+            Address = new AddressDTO {
+                Title = ticket.Address!.Title,
+                ImageUrl = ticket.Address.ImageUrl,
+                City = new CityDTO {
+                    Name = ticket.Address.City!.Name,
+                    ImageUrl = ticket.Address.City!.ImageUrl,
+                    Url = ticket.Address.City!.Url
+                }
+            },
+            // Artors = ticket.TicketArtors.Select( i=> _mapper!.Map<ArtorDTO>(i.Artor)).ToList()
+        };
+
+        return ticketDTO;
     }
 }

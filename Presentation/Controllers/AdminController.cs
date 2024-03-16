@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Shared;
 
 namespace Presentation;
 
@@ -9,8 +10,12 @@ public class AdminController: ControllerBase
 
     [HttpPost]
     [Route("addticket")]
-    public async Task<IActionResult> AddTicket()
+    public async Task<IActionResult> AddTicket([FromBody] TicketModel model)
     {
-        return Ok();
+        if(!ModelState.IsValid)
+        {
+            return BadRequest( new ErrorResponse() );
+        }
+        return Ok( "ok" );
     }
 }

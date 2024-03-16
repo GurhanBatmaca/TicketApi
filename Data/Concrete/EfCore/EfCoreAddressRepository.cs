@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Entity;
+﻿using Entity;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
@@ -7,11 +6,9 @@ namespace Data;
 
 public class EfCoreAddressRepository: EfCoreGenericRepository<Address>,IAddressRepository
 {
-    public EfCoreAddressRepository(StoreContext context,IMapper? mapper):base(context)
+    public EfCoreAddressRepository(StoreContext context):base(context)
     {
-        _mapper = mapper;
     }
-    protected IMapper? _mapper;
     protected StoreContext? Context => _context as StoreContext;
 
     public async Task<List<AddressDTO>> GetAll(int page,int PageSize)
