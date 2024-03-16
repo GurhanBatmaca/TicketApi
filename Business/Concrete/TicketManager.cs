@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using AutoMapper;
+using Data;
 using Entity;
 using Shared;
 using Shared.Helpers;
@@ -8,10 +9,12 @@ namespace Business;
 public class TicketManager : ITicketService
 {
     protected private IUnitOfWork? _unitOfWork;
-    public TicketManager(IUnitOfWork? unitOfWork)
+    protected private IMapper? _mapper;
+    public TicketManager(IUnitOfWork? unitOfWork,IMapper? mapper)
     {
         _unitOfWork = unitOfWork;
-    }
+        _mapper = mapper;
+    } 
     public string? Message { get; set; }
 
     public Task Create(Ticket entity)

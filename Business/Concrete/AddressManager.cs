@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using AutoMapper;
+using Data;
 using Entity;
 using Shared;
 
@@ -7,9 +8,11 @@ namespace Business;
 public class AddressManager : IAddressService
 {
     protected private IUnitOfWork? _unitOfWork;
-    public AddressManager(IUnitOfWork? unitOfWork)
+    protected private IMapper? _mapper;
+    public AddressManager(IUnitOfWork? unitOfWork,IMapper? mapper)
     {
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     } 
     public string? Message { get; set; }
 

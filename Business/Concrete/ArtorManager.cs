@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using AutoMapper;
+using Data;
 using Entity;
 using Shared;
 
@@ -6,12 +7,13 @@ namespace Business;
 
 public class ArtorManager : IArtorService
 {
-
     protected private IUnitOfWork? _unitOfWork;
-    public ArtorManager(IUnitOfWork? unitOfWork)
+    protected private IMapper? _mapper;
+    public ArtorManager(IUnitOfWork? unitOfWork,IMapper? mapper)
     {
         _unitOfWork = unitOfWork;
-    }
+        _mapper = mapper;
+    } 
     public string? Message { get; set; }
 
     public Task Create(Artor entity)
