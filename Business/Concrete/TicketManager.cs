@@ -213,4 +213,94 @@ public class TicketManager : ITicketService
         return true;
     }
 
+    public async Task<bool> Create(TicketCreateModel model)
+    {
+        if(model.Price <= 0 || model.Price > 99999)
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Price hatası."
+            };
+            return false;
+        }
+
+        if(model.Limit <= 0 || model.Limit > 50000)
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Limit hatası."
+            };
+            return false;
+        }
+
+        if(string.IsNullOrEmpty(model.Name))
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Name hatası."
+            };
+            return false;
+        }
+
+        var chechAddress = await _unitOfWork!.Addresses.GetById(model.AddressId);
+
+        if(chechAddress is null)
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Var olmayan address hatası."
+            };
+            return false;
+        }
+
+        var chechActivity = await _unitOfWork!.Activities.GetById(model.ActivityId);
+
+        if(chechActivity is null)
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Var olmayan activity hatası."
+            };
+            return false;
+        }
+
+        foreach (var id in model.ArtorsIds!)
+        {
+            var chechartor = await _unitOfWork!.Artors.GetById(id);
+
+            if(chechartor is null)
+            {
+                ErrorResponse = new ErrorResponse 
+                {
+                    Error = "Var olmayan artor hatası."
+                };
+                return false;
+            }
+        }
+
+        var ticket = new Ticket
+        {
+            Limit = model.Limit,
+            Name = model.Name,
+            Price = model.Price,
+            ImageUrl = model.ImageUrl,
+            Url = UrlConverter.Edit(model.Name),
+            EventDate = model.EventDate,
+            AddressId = model.AddressId,
+            ActivityId = model.ActivityId,
+            TicketArtors = model.ArtorsIds!.Select(ai => new TicketArtor {
+                TicketId = model.Id,
+                ArtorId = ai
+
+            }).ToList()
+        };
+
+        await _unitOfWork!.Tickets.Create(ticket);
+
+        SuccessResponse = new SuccessResponse 
+        {
+            Message = "Ticket eklendi."
+        };
+        return true;
+    }
 }
