@@ -10,7 +10,6 @@ namespace Presentation;
 [Authorize]
 public class ActivityController: ControllerBase
 {
-
     protected private IActivityService _activityService;
     protected private IConfiguration _configuration;
     public int PageSize => Int32.Parse(_configuration["PageSize"]!);
@@ -24,29 +23,41 @@ public class ActivityController: ControllerBase
     [Route("all")]
     public async Task<IActionResult> All()
     {
-        var activities = await _activityService.GetAll();
-        return Ok( new SuccessResponse { Data = activities } );
+
+        if(await _activityService.GetAll())
+        {
+            return Ok( _activityService.SuccessResponse );
+        }
+
+        return BadRequest( _activityService.ErrorResponse );
+
     }
 
     [HttpGet]
     [Route("allWithCategories")]
     public async Task<IActionResult> AllWithCategories()
     {
-        var activities = await _activityService.GetAllWithCategories();
-        return Ok( new SuccessResponse { Data = activities } );
+
+        if(await _activityService.GetAllWithCategories())
+        {
+            return Ok( _activityService.SuccessResponse );
+        }
+
+        return BadRequest( _activityService.ErrorResponse );
+
     }
 
     [HttpGet]
     [Route("activity/{id}")]
     public async Task<IActionResult> ActivityDetails(int id)
     {
-        var activity = await _activityService.GetById(id);
 
-        if(string.IsNullOrEmpty(activity!.Name))
+        if(await _activityService.GetById(id))
         {
-            return BadRequest( new ErrorResponse { Error = "Activity id hatası" } );
+            return Ok( _activityService.SuccessResponse );
         }
-        return Ok( new SuccessResponse { Data = activity } );
+
+        return BadRequest( _activityService.ErrorResponse );
 
     }
 }

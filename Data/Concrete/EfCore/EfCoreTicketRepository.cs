@@ -23,7 +23,6 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 .AsQueryable();
 
         return await tickets.Skip((page-1)*pageSize).Take(pageSize).ToListAsync();
-
     }
 
     public async Task<int> GetAllCount()
@@ -33,9 +32,6 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
  
     public async Task<List<Ticket>> GetFilterResult(FilterModel model, int page, int pageSize)
     {
-        model.Activity = UrlConverter.Edit(model.Activity!);
-        model.Address = UrlConverter.Edit(model.Address!);
-        model.Artor = UrlConverter.Edit(model.Artor!);
 
         var tickets = Context!.Tickets
                                 .Include(e=> e.Address)
@@ -47,9 +43,9 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 .ThenInclude(e=> e.Artor)
                                 .Where(e => 
                                     (e.EventDate >= model.Date && e.Limit > 0 ) &&  
-                                    e.Activity!.Url.Contains(model.Activity) && 
-                                    ( e.Address!.City!.Url.Contains(model.Address) || e.Address!.Title.Contains(model.Address) ) &&
-                                    e.TicketArtors.Any(i=> i.Artor!.Url.Contains(model.Artor))
+                                    e.Activity!.Url.Contains(model.Activity!) && 
+                                    ( e.Address!.City!.Url.Contains(model.Address!) || e.Address!.Title.Contains(model.Address!) ) &&
+                                    e.TicketArtors.Any(i=> i.Artor!.Url.Contains(model.Artor!))
                                 )
                                 .AsQueryable();
 
@@ -63,9 +59,6 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
 
     public async Task<int> GetFilterResultCount(FilterModel model)
     {
-        model.Activity = UrlConverter.Edit(model.Activity!);
-        model.Address = UrlConverter.Edit(model.Address!);
-        model.Artor = UrlConverter.Edit(model.Artor!);
 
         var ticketList = Context!.Tickets
                                 .Include(e=> e.Address)
@@ -77,9 +70,9 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
                                 .ThenInclude(e=> e.Artor)
                                 .Where(e => 
                                     (e.EventDate >= model.Date && e.Limit > 0 ) &&  
-                                    e.Activity!.Url.Contains(model.Activity) && 
-                                    ( e.Address!.City!.Url.Contains(model.Address) || e.Address!.Title.Contains(model.Address) ) &&
-                                    e.TicketArtors.Any(i=> i.Artor!.Url.Contains(model.Artor))
+                                    e.Activity!.Url.Contains(model.Activity!) && 
+                                    ( e.Address!.City!.Url.Contains(model.Address!) || e.Address!.Title.Contains(model.Address!) ) &&
+                                    e.TicketArtors.Any(i=> i.Artor!.Url.Contains(model.Artor!))
                                 )
                                 .AsQueryable();
 
@@ -93,7 +86,6 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
 
     public async Task<List<Ticket>> GetSearchResult(SearchModel model,int page,int pageSize)
     {
-        model.Query = UrlConverter.Edit(model.Query);
 
         var tickets = Context!.Tickets
                                 .Include(e=> e.Address)
@@ -119,7 +111,6 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
 
     public async Task<int> GetSearchResultCount(SearchModel model)
     {
-        model.Query = UrlConverter.Edit(model.Query);
 
         var ticketList = Context!.Tickets
                                 .Include(e=> e.Address)

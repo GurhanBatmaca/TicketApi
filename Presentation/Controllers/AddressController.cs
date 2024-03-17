@@ -22,30 +22,24 @@ public class AddressController: ControllerBase
     [Route("all")]
     public async Task<IActionResult> All(int page=1)
     {
-        var addresses = await _addressService.GetAll(page,PageSize);
-        var totalItems = await _addressService.GetAllCount();      
-        var pageInfo = new PageInfo {TotalItems=totalItems,ItemPerPage=PageSize,CurrentPage=page,};
-
-        if(page > pageInfo.TotalPages)
+        if(await _addressService.GetAll(page,PageSize))
         {
-            return BadRequest( new ErrorResponse { Error = "İndex hatası,Liste boyutu aşıldı." } );
+            return Ok( _addressService.SuccessResponse );
         }
 
-        return Ok( new SuccessResponse { Data = addresses, PageInfo = pageInfo } );
+        return BadRequest( _addressService.ErrorResponse );
     }
 
     [HttpGet]
     [Route("address/{id}")]
     public async Task<IActionResult> AddressDetails(int id)
     {
-        var address = await _addressService.GetById(id);
-
-        if(string.IsNullOrEmpty(address!.Title))
+        if(await _addressService.GetById(id))
         {
-            return BadRequest( new ErrorResponse { Error = "Address id hatası" } );
+            return Ok( _addressService.SuccessResponse );
         }
 
-        return Ok( new SuccessResponse { Data = address } );
+        return BadRequest( _addressService.ErrorResponse );
 
     }
 
@@ -53,8 +47,12 @@ public class AddressController: ControllerBase
     [Route("cities")]
     public async Task<IActionResult> Cities()
     {
-        var cities = await _addressService.GetCities();
-        return Ok( new SuccessResponse { Data = cities } );
+        if(await _addressService.GetCities())
+        {
+            return Ok( _addressService.SuccessResponse );
+        }
+
+        return BadRequest( _addressService.ErrorResponse );
 
     }
 
@@ -62,14 +60,12 @@ public class AddressController: ControllerBase
     [Route("cities/city/{id}")]
     public async Task<IActionResult> CityDetails(int id)
     {
-        var city = await _addressService.GetCityById(id);
-
-        if(string.IsNullOrEmpty(city!.Name))
+        if(await _addressService.GetCityById(id))
         {
-            return BadRequest( new ErrorResponse { Error = "City id hatası" } );
+            return Ok( _addressService.SuccessResponse );
         }
-        
-        return Ok( new SuccessResponse { Data = city } );
+
+        return BadRequest( _addressService.ErrorResponse );
     }
 
 }

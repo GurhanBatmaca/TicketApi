@@ -10,7 +10,7 @@ public class AdminController: ControllerBase
 
     [HttpPost]
     [Route("addticket")]
-    public async Task<IActionResult> AddTicket([FromBody] TicketModel model)
+    public async Task<IActionResult> AddTicket([FromBody] TicketCreateModel model)
     {
         if(!ModelState.IsValid)
         {

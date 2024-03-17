@@ -23,30 +23,36 @@ public class ArtorController: ControllerBase
     [Route("all")]
     public async Task<IActionResult> All()
     {
-        var artors = await _artorService.GetAll();
-        return Ok( new SuccessResponse { Data = artors } );
+        if(await _artorService.GetAll())
+        {
+            return Ok( _artorService.SuccessResponse );
+        }
+
+        return BadRequest( _artorService.ErrorResponse );
     }
 
     [HttpGet]
     [Route("allWithWorks")]
     public async Task<IActionResult> AllWithWorks()
     {
-        var artors = await _artorService.GetAllWithWorks();
-        return Ok( new SuccessResponse { Data = artors } );
+        if(await _artorService.GetAllWithWorks())
+        {
+            return Ok( _artorService.SuccessResponse );
+        }
+
+        return BadRequest( _artorService.ErrorResponse );
     }
 
     [HttpGet]
     [Route("artor/{id}")]
     public async Task<IActionResult> ArtorDetails(int id)
     {
-        var artor = await _artorService.GetById(id);
-
-        if(string.IsNullOrEmpty(artor!.Name))
+        if(await _artorService.GetById(id))
         {
-            return BadRequest( new ErrorResponse { Error = "Artor id hatası" } );
-            
+            return Ok( _artorService.SuccessResponse );
         }
-        return Ok( new SuccessResponse { Data = artor } );
+
+        return BadRequest( _artorService.ErrorResponse );
     }
 
 }

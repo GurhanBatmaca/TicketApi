@@ -1,9 +1,9 @@
-﻿namespace Business;
+﻿using Shared;
 
-public interface IService<T>
+namespace Business;
+
+public interface IService
 {
-    string? Message { get; set; }
-    Task Create(T entity);
-    Task Update(T entity);
-    Task Delete(T entity);
+    SuccessResponse? SuccessResponse {get;set;}
+    ErrorResponse? ErrorResponse {get;set;}
 }

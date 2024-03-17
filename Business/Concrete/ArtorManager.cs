@@ -14,35 +14,101 @@ public class ArtorManager : IArtorService
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     } 
-    public string? Message { get; set; }
+    public SuccessResponse? SuccessResponse { get ; set ; }
+    public ErrorResponse? ErrorResponse { get ; set ; }
 
-    public Task Create(Artor entity)
+    public Task<bool> Create(Artor entity)
     {
         throw new NotImplementedException();
     }
 
-    public Task Delete(Artor entity)
+    public Task<bool> Delete(Artor entity)
     {
         throw new NotImplementedException();
     }
 
-    public Task Update(Artor entity)
+    public Task<bool> Update(Artor entity)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<List<ArtorSummaryDTO>> GetAll()
+    public async Task<bool> GetAll()
     {
-        return await _unitOfWork!.Artors.GetAll();
+        var artorList = await _unitOfWork!.Artors.GetAll();
+
+        if(artorList is null)
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Boş liste hatası."
+            };
+            return false;
+        }
+
+        var artors = artorList.Select(e => _mapper!.Map<ArtorSummaryDTO>(e));
+
+        SuccessResponse = new SuccessResponse 
+        {
+            Data = artors
+        };
+
+        return true;
+
     }
 
-    public async Task<List<ArtorDTO>> GetAllWithWorks()
+    public async Task<bool> GetAllWithWorks()
     {
-        return await _unitOfWork!.Artors.GetAllWithWorks();
+        var artorList = await _unitOfWork!.Artors.GetAllWithWorks();
+
+        if(artorList is null)
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Boş liste hatası."
+            };
+            return false;
+        }
+
+        var artors = artorList.Select(e => new ArtorDTO {
+            Name = e.Name,
+            ImageUrl = e.ImageUrl,
+            Url = e.Url,
+            Works = e.ArtorWorks.Select(i=> _mapper!.Map<WorkDTO>(i.Work)).ToList()
+        });
+
+        SuccessResponse = new SuccessResponse 
+        {
+            Data = artors
+        };
+
+        return true;
     }
 
-    public async Task<ArtorDTO> GetById(int id)
+    public async Task<bool> GetById(int id)
     {
-        return await _unitOfWork!.Artors.GetById(id);
+        var artor = await _unitOfWork!.Artors.GetById(id);
+
+        if(artor is null)
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Artor id hatası."
+            };
+            return false;
+        }
+
+        var artorDTO =  new ArtorDTO {
+            Name = artor.Name,
+            ImageUrl = artor.ImageUrl,
+            Url = artor.Url,
+            Works = artor.ArtorWorks.Select(i=> _mapper!.Map<WorkDTO>(i.Work)).ToList()
+        };
+
+        SuccessResponse = new SuccessResponse 
+        {
+            Data = artorDTO
+        };
+
+        return true;
     }
 }

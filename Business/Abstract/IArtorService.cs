@@ -3,9 +3,9 @@ using Shared;
 
 namespace Business;
 
-public interface IArtorService: IService<Artor>
+public interface IArtorService: IService
 {
-    Task<List<ArtorSummaryDTO>> GetAll();
-    Task<List<ArtorDTO>> GetAllWithWorks();
-    Task<ArtorDTO> GetById(int id);
+    Task<bool> GetAll();
+    Task<bool> GetAllWithWorks();
+    Task<bool> GetById(int id);
 }

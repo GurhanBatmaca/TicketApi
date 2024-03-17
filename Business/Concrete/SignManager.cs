@@ -17,14 +17,17 @@ public class SignManager : ISignService
         _unitOfWork = unitOfWork;
         _configuration = configuration;
     }
-    public string? Message { get; set; }
-    public TokenModel? TokenModel { get; set; }
+    public SuccessResponse? SuccessResponse { get ; set ; }
+    public ErrorResponse? ErrorResponse { get ; set ; }
 
     public async Task<bool> Login(LoginModel model)
     {
         if(!CheckInput.IsValid(model.Email!) || !CheckInput.IsValid(model.Password!))
         {
-            Message = "Kullanılamaz karater (_-*-or-and-'-).";
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Kullanılamaz karater hatası (_-*-or-and-'-)."
+            };
             return false;
         }
 
@@ -32,13 +35,19 @@ public class SignManager : ISignService
 
         if(user == null)
         {
-            Message += "Bu email adresi ile kayıtlı kullanıcı bulunamadı.";
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "E-posta hatası,Bu e-posta ile kullanıcı bulunamadı."
+            };
             return false;
         }
 
         if(!await _unitOfWork!.Users.IsEmailConfirmed(user))
         {
-            Message += "Onaylanmamış hesap,lütfen size gönderilen e-posta ile üyeliğinizi onaylayın.";
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Onaylanmamış hesap hatası."
+            };
             return false;
         }
 
@@ -46,7 +55,10 @@ public class SignManager : ISignService
 
         if(!result)
         {
-            Message += "Şifre yanlış.";
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Yanlış şifre hatası."
+            };
             return false;
         }
 
@@ -76,11 +88,14 @@ public class SignManager : ISignService
 
         var stringToken = new JwtSecurityTokenHandler().WriteToken(token);
 
-        TokenModel = new TokenModel {
-            Token = stringToken,
-            ExpireDate = token.ValidTo
+        SuccessResponse = new SuccessResponse
+        {
+            Data = new TokenModel 
+            {
+                Token = stringToken,
+                ExpireDate = token.ValidTo
+            }
         };
-
         return true;
     }
 }

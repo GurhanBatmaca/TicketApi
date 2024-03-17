@@ -2,9 +2,8 @@
 
 namespace Business;
 
-public interface IUserService
+public interface IUserService: IService
 {
-    string? Message {get;set;}
     Task<bool> Create(RegisterModel model);
     Task<bool> ConfirmEmail(string userId,string token);
     Task<bool> GeneratePasswordResetToken(string email);

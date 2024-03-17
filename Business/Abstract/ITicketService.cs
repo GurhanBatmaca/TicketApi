@@ -3,16 +3,13 @@ using Shared;
 
 namespace Business;
 
-public interface ITicketService: IService<Ticket>
+public interface ITicketService: IService
 {
-    Task<List<TicketSummaryDTO>?> GetAll(int page,int pageSize);
-    Task<int> GetAllCount();
+    Task<bool> GetAll(int page,int pageSize);
 
-    Task<List<TicketSummaryDTO>> GetFilterResult(FilterModel model,int page,int pageSize);
-    Task<int> GetFilterResultCount(FilterModel model);
+    Task<bool> GetFilterResult(FilterModel model,int page,int pageSize);
 
-    Task<List<TicketSummaryDTO>> GetSearchResult(SearchModel model,int page,int pageSize);
-    Task<int> GetSearchResultCount(SearchModel model);
+    Task<bool> GetSearchResult(SearchModel model,int page,int pageSize);
 
-    Task<TicketDTO?> GetById(int id);
+    Task<bool> GetById(int id);
 }

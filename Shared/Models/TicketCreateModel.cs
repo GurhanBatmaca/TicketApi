@@ -2,7 +2,7 @@
 
 namespace Shared;
 
-public class TicketModel
+public class TicketCreateModel
 {
 
     [Required]

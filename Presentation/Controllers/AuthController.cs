@@ -25,16 +25,14 @@ public class AuthController: ControllerBase
     [Route("login")]
     public async Task<IActionResult> Login([FromBody]LoginModel model)
     {
-        if(!ModelState.IsValid)
+
+        if(await _signService.Login(model))
         {
-            return BadRequest( new ErrorResponse() );
+            return Ok( _signService.SuccessResponse );
         }
-        if(!await _signService.Login(model))
-        {
-            return BadRequest( new ErrorResponse { Error = _signService.Message! } );
-        }
-        
-        return Ok( new SuccessResponse { Data = _signService.TokenModel! } );
+
+        return BadRequest( _signService.ErrorResponse );
+
         
     }
     [HttpPost]
@@ -46,12 +44,12 @@ public class AuthController: ControllerBase
             return BadRequest( new ErrorResponse() );
         }
         
-        if(!await _userService.Create(model))
+        if(await _userService.Create(model))
         {
-            return BadRequest( new ErrorResponse { Error = _userService.Message! } );
+            return Ok( _userService.SuccessResponse );
         }
         
-        return Ok( new SuccessResponse { Message = _userService.Message! } );
+        return BadRequest( _userService.ErrorResponse );
         
     }
 
@@ -63,13 +61,14 @@ public class AuthController: ControllerBase
         {
             return BadRequest( new ErrorResponse() );
         }
-        
-        if(!await _userService.ConfirmEmail(token,userId))
+
+        if(await _userService.ConfirmEmail(token,userId))
         {
-            return BadRequest( new ErrorResponse { Error = _userService.Message! } );
+            return Ok( _userService.SuccessResponse );
         }
         
-        return Ok( new SuccessResponse { Message = _userService.Message! } );
+        return BadRequest( _userService.ErrorResponse );
+        
     }
 
     [HttpGet]
@@ -81,12 +80,13 @@ public class AuthController: ControllerBase
             return BadRequest( new ErrorResponse() );
         }
         
-        if(!await _userService.GeneratePasswordResetToken(email))
+        if(await _userService.GeneratePasswordResetToken(email))
         {
-            return BadRequest( new ErrorResponse { Error = _userService.Message! } );
+            return Ok( _userService.SuccessResponse );
         }
         
-        return Ok( new SuccessResponse { Message = _userService.Message! } );
+        return BadRequest( _userService.ErrorResponse );
+
     }
 
     [HttpPost]
@@ -97,13 +97,14 @@ public class AuthController: ControllerBase
         {
             return BadRequest( new ErrorResponse() );
         }
-        
-        if(!await _userService.ResetPassword(model))
+
+        if(await _userService.ResetPassword(model))
         {
-            return BadRequest( new ErrorResponse { Error = _userService.Message! } );
+            return Ok( _userService.SuccessResponse );
         }
         
-        return Ok( new SuccessResponse { Message = _userService.Message! } );
+        return BadRequest( _userService.ErrorResponse );
+        
     }
 
 }

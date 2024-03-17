@@ -5,9 +5,9 @@ namespace Data;
 
 public interface IAddressRepository: IRepository<Address>
 {
-    Task<List<AddressDTO>> GetAll(int page,int PageSize);
+    Task<List<Address>> GetAll(int page,int pageSize);
     Task<int> GetAllCount();
-    Task<AddressDTO> GetById(int id);
-    Task<List<CityDTO>> GetCities();
-    Task<CityDTO> GetCityById(int id);
+    Task<Address?> GetById(int id);
+    Task<List<City>> GetCities();
+    Task<City?> GetCityById(int id);
 }

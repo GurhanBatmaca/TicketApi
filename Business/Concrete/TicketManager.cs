@@ -15,30 +15,20 @@ public class TicketManager : ITicketService
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     } 
-    public string? Message { get; set; }
+    public SuccessResponse? SuccessResponse { get ; set ; }
+    public ErrorResponse? ErrorResponse { get ; set ; }
 
-    public Task Create(Ticket entity)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task Delete(Ticket entity)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task Update(Ticket entity)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<List<TicketSummaryDTO>?> GetAll(int page, int pageSize)
+    public async Task<bool> GetAll(int page, int pageSize)
     {
         var ticketList =  await _unitOfWork!.Tickets.GetAll(page,pageSize);
 
         if(ticketList is null)
         {
-            return [];
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Boş liste hatası."
+            };
+            return false;
         }
 
         var tickets = ticketList.Select(e => new TicketSummaryDTO {
@@ -51,17 +41,47 @@ public class TicketManager : ITicketService
             City = e.Address.City!.Name
         });
 
-        return tickets.ToList();
+        var pageInfo = new PageInfo 
+        {
+            TotalItems = await _unitOfWork.Tickets.GetAllCount(),
+            ItemPerPage = pageSize,
+            CurrentPage = page
+        };
+
+        if(page > pageInfo.TotalItems)
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Index hatası."
+            };
+            return false;
+        }
+
+        SuccessResponse = new SuccessResponse 
+        {
+            Data = tickets,
+            PageInfo = pageInfo
+        };
+
+        return true;
     }
 
-    public async Task<int> GetAllCount()
+    public async Task<bool> GetFilterResult(FilterModel model,int page,int pageSize)
     {
-        return await _unitOfWork!.Tickets.GetAllCount();
-    }
+        model.Activity = UrlConverter.Edit(model.Activity!);
+        model.Address = UrlConverter.Edit(model.Address!);
+        model.Artor = UrlConverter.Edit(model.Artor!);
 
-    public async Task<List<TicketSummaryDTO>> GetFilterResult(FilterModel model,int page,int pageSize)
-    {
         var ticketList = await _unitOfWork!.Tickets.GetFilterResult(model,page,pageSize);
+
+        if(ticketList is null)
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Boş liste hatası."
+            };
+            return false;
+        }
 
          var tickets = ticketList.Select(e => new TicketSummaryDTO {
             Name = e.Name,
@@ -73,17 +93,44 @@ public class TicketManager : ITicketService
             City = e.Address.City!.Name
         });
 
-        return tickets.ToList();
+        var pageInfo = new PageInfo 
+        {
+            TotalItems = await _unitOfWork.Tickets.GetFilterResultCount(model),
+            ItemPerPage = pageSize,
+            CurrentPage = page
+        };
+
+        if(page > pageInfo.TotalItems)
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Index hatası."
+            };
+            return false;
+        }
+
+        SuccessResponse = new SuccessResponse 
+        {
+            Data = tickets,
+            PageInfo = pageInfo
+        };
+
+        return true;
     }
 
-    public async Task<int> GetFilterResultCount(FilterModel model)
+    public async Task<bool> GetSearchResult(SearchModel model,int page,int pageSize)
     {
-        return await _unitOfWork!.Tickets.GetFilterResultCount(model);
-    }
-
-    public async Task<List<TicketSummaryDTO>> GetSearchResult(SearchModel model,int page,int pageSize)
-    {
+        model.Query = UrlConverter.Edit(model.Query);
         var ticketList = await _unitOfWork!.Tickets.GetSearchResult(model,page,pageSize);
+
+        if(ticketList is null)
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Boş liste hatası."
+            };
+            return false;
+        }
 
         var tickets = ticketList.Select(e => new TicketSummaryDTO {
             Name = e.Name,
@@ -95,17 +142,43 @@ public class TicketManager : ITicketService
             City = e.Address.City!.Name
         });
 
-        return tickets.ToList();
+        var pageInfo = new PageInfo 
+        {
+            TotalItems = await _unitOfWork.Tickets.GetSearchResultCount(model),
+            ItemPerPage = pageSize,
+            CurrentPage = page
+        };
+
+        if(page > pageInfo.TotalItems)
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Index hatası."
+            };
+            return false;
+        }
+
+        SuccessResponse = new SuccessResponse 
+        {
+            Data = tickets,
+            PageInfo = pageInfo
+        };
+
+        return true;
     }
 
-    public async Task<int> GetSearchResultCount(SearchModel model)
-    {
-        return await _unitOfWork!.Tickets.GetSearchResultCount(model);
-    }
-
-    public async Task<TicketDTO?> GetById(int id)
+    public async Task<bool> GetById(int id)
     {
         var ticket = await _unitOfWork!.Tickets.GetById(id);
+
+        if(ticket is null)
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Ticket id hatası."
+            };
+            return false;
+        }
 
         var ticketDTO = new TicketDTO
         {
@@ -118,7 +191,7 @@ public class TicketManager : ITicketService
                 Name = ticket.Activity!.Name,
                 Url = ticket.Activity.Url,
                 ImageUrl = ticket.Activity.ImageUrl,
-                // Categories = ticket.Activity.ActivityCategories.Select(i => _mapper!.Map<CategoryDTO>(i.Category)).ToList() 
+                Categories = ticket.Activity.ActivityCategories.Select(i => _mapper!.Map<CategoryDTO>(i.Category)).ToList() 
             },
             Address = new AddressDTO {
                 Title = ticket.Address!.Title,
@@ -129,9 +202,15 @@ public class TicketManager : ITicketService
                     Url = ticket.Address.City!.Url
                 }
             },
-            // Artors = ticket.TicketArtors.Select( i=> _mapper!.Map<ArtorDTO>(i.Artor)).ToList()
+            Artors = ticket.TicketArtors.Select( i=> _mapper!.Map<ArtorDTO>(i.Artor)).ToList()
         };
 
-        return ticketDTO;
+        SuccessResponse = new SuccessResponse 
+        {
+            Data = ticketDTO
+        };
+
+        return true;
     }
+
 }

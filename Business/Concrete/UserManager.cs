@@ -19,18 +19,25 @@ public class UserManager : IUserService
         _accessor = accessor;
         _emailSender = emailSender;
     }
-    public string? Message { get ; set ; }
+    public SuccessResponse? SuccessResponse { get ; set ; }
+    public ErrorResponse? ErrorResponse { get ; set ; }
 
     public async Task<bool> Create(RegisterModel model)
     {
         if(string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.UserName) || string.IsNullOrEmpty(model.FirstName) || string.IsNullOrEmpty(model.LastName) || string.IsNullOrEmpty(model.Password) || string.IsNullOrEmpty(model.RePassword))
         {
-            Message = "Zorunlu alan.";
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Zorunlu alan hatası."
+            };
             return false;
         }
         if(!CheckInput.IsValid(model.Email) || !CheckInput.IsValid(model.Password!))
         {
-            Message = "Kullanılamaz karater (_-*-or-and-'-).";
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Kullanılamaz karater hatası (_-*-or-and-'-)."
+            };
             return false;
         }
 
@@ -38,7 +45,10 @@ public class UserManager : IUserService
 
         if(checkEmail is not null)
         {
-            Message = "Bu e-posta adresi ile daha önce üye olunmuş.";
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "E-posta hatası,e-posta zaten kayıtlı."
+            };
             return false;
         }
 
@@ -46,7 +56,10 @@ public class UserManager : IUserService
 
         if(checkUserName is not null)
         {
-            Message = "Bu kullanıcı adı daha önce alınmış.";
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Username hatası,Username zaten kayıtlı."
+            };
             return false;
         }
 
@@ -59,11 +72,18 @@ public class UserManager : IUserService
 
         if(!await _unitOfWork!.Users.Create(user,model.Password))
         {
-            Message = "Şifre en az 6 karater uzunluğunda,büyük küçük harf ve alfanümerik olmalıdır.";
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Şifre hatası,Şifre en az 6 karater uzunluğunda,büyük küçük harf ve alfanümerik olmalıdır."
+            };
             return false;
         }
 
-        Message = "Üyelik oluşturuldu.";
+        SuccessResponse = new SuccessResponse
+        {
+            Message = "Üyelik oluşturuldu."           
+        };
+
         await _unitOfWork.Users.AddToRole(user,"Customer");
 
         var token = await _unitOfWork!.Users.GenerateEmailConfirmationToken(user);
@@ -80,7 +100,10 @@ public class UserManager : IUserService
     {
         if(string.IsNullOrEmpty(token) || string.IsNullOrEmpty(userId))
         {
-            Message = "Eksik url hatası.";
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Eksik url hatası."
+            };
             return false;
         }
 
@@ -88,7 +111,10 @@ public class UserManager : IUserService
 
         if(user is null)
         {
-            Message = "User id hatası.";
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "User id hatası."
+            };
             return false;
         }
 
@@ -96,11 +122,18 @@ public class UserManager : IUserService
 
         if(!await _unitOfWork.Users.ConfirmEmail(user,validToken))
         {
-            Message = "Token hatası.";
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Token id hatası."
+            };
             return false;
         }
 
-        Message = "Üyelik onaylandı";
+        SuccessResponse = new SuccessResponse
+        {
+            Message = "Üyelik onaylandı."           
+        };
+
         return true;
     }
 
@@ -108,7 +141,10 @@ public class UserManager : IUserService
     {
         if(string.IsNullOrEmpty(email))
         {
-            Message = "Eksik url hatası.";
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Eksik url hatası."
+            };
             return false;
         }
 
@@ -116,7 +152,10 @@ public class UserManager : IUserService
 
         if(user is null)
         {
-            Message = "Kullanıcı bulunamadı.";
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "E-posta hatası,kullanıcı bulunamadı."
+            };
             return false;
         }
 
@@ -125,7 +164,11 @@ public class UserManager : IUserService
 
         await _emailSender.SendEmailAsync(user.Email!,"Şifre sıfırlama",$"Şifre sıfırlama kodu: {validToken}");
 
-        Message = "Sıfırlama kodu e-posta adresine gönderildi.";
+        SuccessResponse = new SuccessResponse
+        {
+            Message = "Sıfırlama kodu e-posta adresine gönderildi."           
+        };
+
         return true;
     }
 
@@ -133,14 +176,20 @@ public class UserManager : IUserService
     {
         if(string.IsNullOrEmpty(model.Token) || string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Password) || string.IsNullOrEmpty(model.RePassword))
         {
-            Message = "Zorunlu alan hatası.";
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Zorunlu alan hatası."
+            };
             return false;
         }
 
         var user = await _unitOfWork!.Users.FindByEmail(model.Email!);
         if(user is null)
         {
-            Message = "E-posta hatası,kullanıcı bulunamadı.";
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "E-posta hatası,kullanıcı bulunamadı."
+            };
             return false;
         }
 
@@ -148,11 +197,18 @@ public class UserManager : IUserService
 
         if(!await _unitOfWork.Users.ResetPassword(user!,validToken,model.Password!))
         {
-            Message = "Şifre en az 6 karater uzunluğunda,büyük küçük harf ve alfanümerik olmalıdır.";
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Şifre hatası,Şifre en az 6 karater uzunluğunda,büyük küçük harf ve alfanümerik olmalıdır."
+            };
             return false;
         }
 
-        Message = "Şifre değiştirldi.";
+        SuccessResponse = new SuccessResponse
+        {
+            Message = "Şifre değiştirldi."           
+        };
+
         return true;
 
     }

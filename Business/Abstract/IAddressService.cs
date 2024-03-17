@@ -3,11 +3,10 @@ using Shared;
 
 namespace Business;
 
-public interface IAddressService: IService<Address>
+public interface IAddressService: IService
 {
-    Task<List<AddressDTO>> GetAll(int page,int PageSize);
-    Task<int> GetAllCount();
-    Task<AddressDTO> GetById(int id);
-    Task<List<CityDTO>> GetCities();
-    Task<CityDTO> GetCityById(int id);
+    Task<bool> GetAll(int page,int pageSize);
+    Task<bool> GetById(int id);
+    Task<bool> GetCities();
+    Task<bool> GetCityById(int id);
 }

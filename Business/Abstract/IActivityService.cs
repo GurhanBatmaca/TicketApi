@@ -3,9 +3,9 @@ using Shared;
 
 namespace Business;
 
-public interface IActivityService: IService<Activity>
+public interface IActivityService: IService
 {
-    Task<List<ActivitySummaryDTO>> GetAll();
-    Task<List<ActivityDTO>> GetAllWithCategories();
-    Task<ActivityDTO> GetById(int id);
+    Task<bool> GetAll();
+    Task<bool> GetAllWithCategories();
+    Task<bool> GetById(int id);
 }

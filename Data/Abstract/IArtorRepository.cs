@@ -5,7 +5,7 @@ namespace Data;
 
 public interface IArtorRepository : IRepository<Artor>
 {
-    Task<List<ArtorSummaryDTO>> GetAll();
-    Task<List<ArtorDTO>> GetAllWithWorks();
-    Task<ArtorDTO> GetById(int id);
+    Task<List<Artor>> GetAll();
+    Task<List<Artor>> GetAllWithWorks();
+    Task<Artor?> GetById(int id);
 }
