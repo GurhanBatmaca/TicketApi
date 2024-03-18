@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace Shared;
 
 public class TicketCreateModel
 {
-    public int Id { get; set; }
+    public int Id  { get; set; }
 
     [Required]
     [Range(1,50000)]
@@ -18,12 +19,10 @@ public class TicketCreateModel
     [Required]
     [Range(1,99999,ErrorMessage ="1 - 99999 arasında rakam girin.")]
     public double Price { get; set; }
-    public string ImageUrl { get; set; } = string.Empty;
 
     [Required]
     [DataType(DataType.DateTime)]
     public DateTime EventDate { get; set; }
-    // public string Url { get; set; } = string.Empty;
 
     [Required]
     public int AddressId { get; set; }
@@ -31,6 +30,7 @@ public class TicketCreateModel
     [Required]
     public int ActivityId { get; set; }
 
-    [Required]
+    // [Required]
     public List<int>? ArtorsIds { get; set; }
+    public IFormFile? Image { get; set; }
 }

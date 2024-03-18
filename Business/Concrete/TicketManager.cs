@@ -276,14 +276,13 @@ public class TicketManager : ITicketService
                 };
                 return false;
             }
-        }
-
+        }        
+        
         var ticket = new Ticket
         {
             Limit = model.Limit,
             Name = model.Name,
             Price = model.Price,
-            ImageUrl = model.ImageUrl,
             Url = UrlConverter.Edit(model.Name),
             EventDate = model.EventDate,
             AddressId = model.AddressId,
@@ -294,6 +293,24 @@ public class TicketManager : ITicketService
 
             }).ToList()
         };
+
+        if(model.Image is null)
+        {
+            ticket.ImageUrl = "defaultImage.jpg";
+        }
+        else
+        {
+            var extention = Path.GetExtension(model!.Image!.FileName);
+            var randomName = string.Format($"{Guid.NewGuid()}{extention}");
+            var path = Path.Combine(Directory.GetCurrentDirectory(),"..\\Presentation\\wwwroot\\images", randomName);
+
+            using (var stream = new FileStream(path,FileMode.Create))
+            {
+                await model!.Image.CopyToAsync(stream);
+            }
+            
+            ticket.ImageUrl = randomName;           
+        } 
 
         await _unitOfWork!.Tickets.Create(ticket);
 
