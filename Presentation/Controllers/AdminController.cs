@@ -44,4 +44,19 @@ public class AdminController: ControllerBase
         }
         return BadRequest( _ticketService.ErrorResponse );
     }
+
+    [HttpDelete]
+    [Route("deleteticket/{id}")]
+    public async Task<IActionResult> DeleteTicket(int id)
+    {
+        if(!ModelState.IsValid)
+        {
+            return BadRequest( new ErrorResponse() );
+        }
+        if(await _ticketService.Delete(id))
+        {
+            return Ok( _ticketService.SuccessResponse );
+        }
+        return BadRequest( _ticketService.ErrorResponse );
+    }
 }

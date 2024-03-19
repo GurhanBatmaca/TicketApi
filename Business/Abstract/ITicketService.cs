@@ -14,4 +14,5 @@ public interface ITicketService: IService
     Task<bool> GetById(int id);
     Task<bool> Create(TicketModel model);
     Task<bool> Update(TicketModel model);
+    Task<bool> Delete(int id);
 }

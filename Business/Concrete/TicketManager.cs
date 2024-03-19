@@ -429,4 +429,24 @@ public class TicketManager : ITicketService
         };
         return true;
     }
+
+    public async Task<bool> Delete(int id)
+    {
+        var ticket = await _unitOfWork!.Tickets.GetById(id);
+
+        if(ticket is null || id < 1)
+        {
+            ErrorResponse = new ErrorResponse {
+                Error = "Ticket id hatası."
+            };
+            return false;
+        }
+
+        await _unitOfWork.Tickets.Delete(ticket);
+
+        SuccessResponse = new SuccessResponse {
+            Message = "Ticket silindi"
+        };
+        return true;
+    }
 }
