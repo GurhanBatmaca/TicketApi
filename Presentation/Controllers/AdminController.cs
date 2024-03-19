@@ -30,7 +30,7 @@ public class AdminController: ControllerBase
         return BadRequest( _ticketService.ErrorResponse );
     }
 
-    [HttpPost]
+    [HttpPut]
     [Route("updateticket")]
     public async Task<IActionResult> UpdateTicket([FromForm] TicketModel model)
     {

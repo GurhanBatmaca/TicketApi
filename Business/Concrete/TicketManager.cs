@@ -388,6 +388,15 @@ public class TicketManager : ITicketService
         
         var ticket = await _unitOfWork!.Tickets.GetById(model.Id);
 
+        if(ticket is null)
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Ticket id hatası."
+            };
+            return false;
+        }
+
         ticket!.Name = model.Name;
         ticket.Url = UrlConverter.Edit(model.Name);
         ticket.Limit = model.Limit;
@@ -434,7 +443,7 @@ public class TicketManager : ITicketService
     {
         var ticket = await _unitOfWork!.Tickets.GetById(id);
 
-        if(ticket is null || id < 1)
+        if(ticket is null)
         {
             ErrorResponse = new ErrorResponse {
                 Error = "Ticket id hatası."
