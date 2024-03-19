@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Shared;
 
-public class TicketCreateModel
+public class TicketModel
 {
     public int Id  { get; set; }
 
@@ -30,7 +30,7 @@ public class TicketCreateModel
     [Required]
     public int ActivityId { get; set; }
 
-    // [Required]
+    [Required]
     public List<int>? ArtorsIds { get; set; }
     public IFormFile? Image { get; set; }
 }

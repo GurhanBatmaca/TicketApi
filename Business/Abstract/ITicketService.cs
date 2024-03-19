@@ -12,5 +12,6 @@ public interface ITicketService: IService
     Task<bool> GetSearchResult(SearchModel model,int page,int pageSize);
 
     Task<bool> GetById(int id);
-    Task<bool> Create(TicketCreateModel model);
+    Task<bool> Create(TicketModel model);
+    Task<bool> Update(TicketModel model);
 }

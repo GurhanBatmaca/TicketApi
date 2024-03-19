@@ -213,7 +213,7 @@ public class TicketManager : ITicketService
         return true;
     }
 
-    public async Task<bool> Create(TicketCreateModel model)
+    public async Task<bool> Create(TicketModel model)
     {
         if(model.Price <= 0 || model.Price > 99999)
         {
@@ -317,6 +317,115 @@ public class TicketManager : ITicketService
         SuccessResponse = new SuccessResponse 
         {
             Message = "Ticket eklendi."
+        };
+        return true;
+    }
+
+    public async Task<bool> Update(TicketModel model)
+    {
+        if(model.Price <= 0 || model.Price > 99999)
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Price hatası."
+            };
+            return false;
+        }
+
+        if(model.Limit <= 0 || model.Limit > 50000)
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Limit hatası."
+            };
+            return false;
+        }
+
+        if(string.IsNullOrEmpty(model.Name))
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Name hatası."
+            };
+            return false;
+        }
+
+        var chechAddress = await _unitOfWork!.Addresses.GetById(model.AddressId);
+
+        if(chechAddress is null)
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Var olmayan address hatası."
+            };
+            return false;
+        }
+
+        var chechActivity = await _unitOfWork!.Activities.GetById(model.ActivityId);
+
+        if(chechActivity is null)
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Var olmayan activity hatası."
+            };
+            return false;
+        }
+
+        foreach (var id in model.ArtorsIds!)
+        {
+            var chechartor = await _unitOfWork!.Artors.GetById(id);
+
+            if(chechartor is null)
+            {
+                ErrorResponse = new ErrorResponse 
+                {
+                    Error = "Var olmayan artor hatası."
+                };
+                return false;
+            }
+        }        
+        
+        var ticket = await _unitOfWork!.Tickets.GetById(model.Id);
+
+        ticket!.Name = model.Name;
+        ticket.Url = UrlConverter.Edit(model.Name);
+        ticket.Limit = model.Limit;
+        ticket.Price = model.Price;
+        ticket.EventDate = model.EventDate;
+        ticket.AddressId = model.AddressId;
+        ticket.ActivityId = model.ActivityId;
+        ticket.TicketArtors = model.ArtorsIds!.Select(ai=> new TicketArtor{
+            TicketId = model.Id,
+            ArtorId = ai
+        }).ToList();
+
+        if(model.Image is not null)
+        {
+            var extention = Path.GetExtension(model!.Image!.FileName);
+            var randomName = string.Format($"{Guid.NewGuid()}{extention}");
+            var path = Path.Combine(Directory.GetCurrentDirectory(),"..\\Presentation\\wwwroot\\images", randomName);
+
+            using (var stream = new FileStream(path,FileMode.Create))
+            {
+                await model!.Image.CopyToAsync(stream);
+            }
+
+            if(ticket!.ImageUrl != "defaultImage.jpg")
+                {
+                    var exPath = Path.Combine(Directory.GetCurrentDirectory(),"..\\Presentation\\wwwroot\\images",ticket!.ImageUrl!);
+                    System.IO.File.Delete(exPath);
+
+                    ticket.ImageUrl = randomName;
+                }
+            
+            ticket.ImageUrl = randomName;  
+        }
+
+        await _unitOfWork.Tickets.Update(ticket);
+
+        SuccessResponse = new SuccessResponse {
+            Message = "Ticket güncellendi"
         };
         return true;
     }
