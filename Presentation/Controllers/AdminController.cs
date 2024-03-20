@@ -59,4 +59,11 @@ public class AdminController: ControllerBase
         }
         return BadRequest( _ticketService.ErrorResponse );
     }
+
+    [HttpGet]
+    [Route("userlist")]
+    public async Task<IActionResult> UserList(int page=1)
+    {
+        return Ok();
+    }
 }

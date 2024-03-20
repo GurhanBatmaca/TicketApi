@@ -32,7 +32,7 @@ public class UnitOfWork : IUnitOfWork
 
     public ISignRepository Signs => signRepository ?? new EfCoreSignRepository(_signInManager,_userManager,_configuration);
 
-    public IUserRepository Users => userRepository ?? new EfCoreUserRepository(_signInManager,_userManager,_configuration);
+    public IUserRepository Users => userRepository ?? new EfCoreUserRepository(_signInManager,_userManager,_configuration,_context);
 
     public void Dispose()
     {
