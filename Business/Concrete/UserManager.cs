@@ -212,4 +212,51 @@ public class UserManager : IUserService
         return true;
 
     }
+
+    public async Task<bool> GetUserList(int page, int pageSize)
+    {
+        var usersList = await _unitOfWork!.Users.GetUserList(page,pageSize);
+
+        if(usersList is null)
+        {
+            ErrorResponse = new ErrorResponse
+            {
+                Error = "Boş liste hatası."
+            };
+            return false;
+        }
+
+        var users = usersList.Select(e => new UserDTO {
+            Id = e.Id,
+            UserName = e.UserName,
+            FirstName = e.FirstName,
+            LastName = e.LastName,
+            JoinDate = e.JoinDate.ToString("yyyy/dd/MM HH:mm:ss"),
+            Email = e.Email,
+            EmailConfirmed = e.EmailConfirmed
+        });
+
+        var pageInfo = new PageInfo 
+        {
+            TotalItems = await _unitOfWork.Users.GetUserListCount(),
+            ItemPerPage = pageSize,
+            CurrentPage = page
+        };
+
+        if(page > pageInfo.TotalPages)
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Index hatası."
+            };
+            return false;
+        }
+
+        SuccessResponse = new SuccessResponse
+        {
+            Data = usersList,
+            PageInfo = pageInfo
+        };
+        return true;
+    }
 }

@@ -10,9 +10,14 @@ public class AdminController: ControllerBase
 {
 
     protected private ITicketService _ticketService;
-    public AdminController(ITicketService ticketService)
+    protected private IUserService _userService;
+    protected private IConfiguration _configuration;
+    public int PageSize => Int32.Parse(_configuration["PageSize"]!);
+    public AdminController(ITicketService ticketService,IUserService userService,IConfiguration configuration)
     {
         _ticketService = ticketService;
+        _userService = userService;
+        _configuration = configuration;
     }
 
     [HttpPost]
@@ -64,6 +69,10 @@ public class AdminController: ControllerBase
     [Route("userlist")]
     public async Task<IActionResult> UserList(int page=1)
     {
-        return Ok();
+        if(await _userService.GetUserList(page,PageSize))
+        {
+            return Ok( _userService.SuccessResponse );
+        }
+        return BadRequest( _userService.ErrorResponse );
     }
 }

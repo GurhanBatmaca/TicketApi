@@ -73,16 +73,26 @@ public class EfCoreUserRepository: IUserRepository
         return await _userManager.GetRolesAsync(user);
     }
 
-    public async Task<List<UserDTO>> GetUserList(int page, int pageSize)
+    public async Task<List<UserEntity>> GetUserList(int page, int pageSize)
     {
 
-        var skip = (page-1)*pageSize;
-        var skip_param = new SqlParameter("page_param", skip);
-        var take_param = new SqlParameter("pageSize_param", pageSize);
-
-        var users = _context!.Database.SqlQuery<UserDTO>($"SELECT u.Id,u.FirstName,u.LastName,u.JoinDate,u.UserName,u.Email,u.EmailConfirmed,u.PhoneNumber,r.Name as Role FROM Users as u inner join UserRoles as ur on u.Id = ur.UserId inner join Roles r on ur.RoleId = r.Id order by u.JoinDate OFFSET {skip_param} ROWS FETCH NEXT {take_param} ROWS ONLY ");
+        var users = _context!.Database.SqlQuery<UserEntity>
+        (
+            $"Select U.Id,U.UserName,U.FirstName,U.LastName,U.Email,U.EmailConfirmed,U.JoinDate,( select R.Name + ',' from Roles as R INNER JOIN UserRoles as UR on R.Id = UR.RoleId where UR.UserId = U.Id for xml path('') ) as Roles from Users as U order by U.JoinDate OFFSET {(page-1)*pageSize} ROWS FETCH NEXT {pageSize} ROWS ONLY"
+        );
 
         return await users.ToListAsync();
+
+    }
+
+    public async Task<int> GetUserListCount()
+    {
+        return _context!.Database.SqlQuery<int>
+        (
+            $"SELECT TOP (1000) count([Id]) as Adet FROM [TicketApiDb].[dbo].[Users]"
+        );
+        
+        return  usersCount;
     }
 
     public async Task<bool> IsEmailConfirmed(AuthUser user)

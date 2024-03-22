@@ -63,7 +63,7 @@ public class AddressManager : IAddressService
             CurrentPage = page
         };
 
-        if(page > pageInfo.TotalItems)
+        if(page > pageInfo.TotalPages)
         {
             ErrorResponse = new ErrorResponse 
             {

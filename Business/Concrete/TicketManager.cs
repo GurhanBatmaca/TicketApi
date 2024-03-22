@@ -48,7 +48,7 @@ public class TicketManager : ITicketService
             CurrentPage = page
         };
 
-        if(page > pageInfo.TotalItems)
+        if(page > pageInfo.TotalPages)
         {
             ErrorResponse = new ErrorResponse 
             {
@@ -100,7 +100,7 @@ public class TicketManager : ITicketService
             CurrentPage = page
         };
 
-        if(page > pageInfo.TotalItems)
+        if(page > pageInfo.TotalPages)
         {
             ErrorResponse = new ErrorResponse 
             {
@@ -149,7 +149,7 @@ public class TicketManager : ITicketService
             CurrentPage = page
         };
 
-        if(page > pageInfo.TotalItems)
+        if(page > pageInfo.TotalPages)
         {
             ErrorResponse = new ErrorResponse 
             {
