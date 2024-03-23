@@ -73,10 +73,10 @@ public class EfCoreUserRepository: IUserRepository
         return await _userManager.GetRolesAsync(user);
     }
 
-    public async Task<List<UserEntity>> GetUserList(int page, int pageSize)
+    public async Task<List<UserModel>> GetUserList(int page, int pageSize)
     {
 
-        var users = _context!.Database.SqlQuery<UserEntity>
+        var users = _context!.Database.SqlQuery<UserModel>
         (
             $"Select U.Id,U.UserName,U.FirstName,U.LastName,U.Email,U.EmailConfirmed,U.JoinDate,( select R.Name + ' ' from Roles as R INNER JOIN UserRoles as UR on R.Id = UR.RoleId where UR.UserId = U.Id for xml path('') ) as Roles from Users as U order by U.JoinDate OFFSET {(page-1)*pageSize} ROWS FETCH NEXT {pageSize} ROWS ONLY"
         );
@@ -87,7 +87,7 @@ public class EfCoreUserRepository: IUserRepository
     public async Task<int> GetUserListCount()
     {
 
-        var users = _context!.Database.SqlQuery<UserEntity>($"Select U.Id from Users as U").AsQueryable();
+        var users = _context!.Database.SqlQuery<UserModel>($"Select U.Id from Users as U").AsQueryable();
       
         return await users.CountAsync();       
     }

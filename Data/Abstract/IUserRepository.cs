@@ -17,6 +17,6 @@ public interface IUserRepository
     Task<AuthUser?> FindById(string id);
     Task<string> GeneratePasswordResetToken(AuthUser user);
     Task<bool> ResetPassword(AuthUser user,string token,string password);
-    Task<List<UserEntity>> GetUserList(int page,int pageSize);
+    Task<List<UserModel>> GetUserList(int page,int pageSize);
     Task<int> GetUserListCount();
 }
