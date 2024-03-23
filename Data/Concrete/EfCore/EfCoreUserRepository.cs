@@ -78,21 +78,18 @@ public class EfCoreUserRepository: IUserRepository
 
         var users = _context!.Database.SqlQuery<UserEntity>
         (
-            $"Select U.Id,U.UserName,U.FirstName,U.LastName,U.Email,U.EmailConfirmed,U.JoinDate,( select R.Name + ',' from Roles as R INNER JOIN UserRoles as UR on R.Id = UR.RoleId where UR.UserId = U.Id for xml path('') ) as Roles from Users as U order by U.JoinDate OFFSET {(page-1)*pageSize} ROWS FETCH NEXT {pageSize} ROWS ONLY"
+            $"Select U.Id,U.UserName,U.FirstName,U.LastName,U.Email,U.EmailConfirmed,U.JoinDate,( select R.Name + ' ' from Roles as R INNER JOIN UserRoles as UR on R.Id = UR.RoleId where UR.UserId = U.Id for xml path('') ) as Roles from Users as U order by U.JoinDate OFFSET {(page-1)*pageSize} ROWS FETCH NEXT {pageSize} ROWS ONLY"
         );
 
         return await users.ToListAsync();
-
     }
 
     public async Task<int> GetUserListCount()
     {
-        return _context!.Database.SqlQuery<int>
-        (
-            $"SELECT TOP (1000) count([Id]) as Adet FROM [TicketApiDb].[dbo].[Users]"
-        );
-        
-        return  usersCount;
+
+        var users = _context!.Database.SqlQuery<UserEntity>($"Select U.Id from Users as U").AsQueryable();
+      
+        return await users.CountAsync();       
     }
 
     public async Task<bool> IsEmailConfirmed(AuthUser user)

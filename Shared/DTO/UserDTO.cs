@@ -9,5 +9,5 @@ public class UserDTO
     public string JoinDate { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public bool EmailConfirmed { get; set; }
-    public string Role { get; set; } = string.Empty;
+    public List<string> Roles { get; set; } = [];
 }

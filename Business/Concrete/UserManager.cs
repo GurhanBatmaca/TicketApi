@@ -233,7 +233,8 @@ public class UserManager : IUserService
             LastName = e.LastName,
             JoinDate = e.JoinDate.ToString("yyyy/dd/MM HH:mm:ss"),
             Email = e.Email,
-            EmailConfirmed = e.EmailConfirmed
+            EmailConfirmed = e.EmailConfirmed,
+            Roles = e.Roles.Trim().Split(" ").ToList()
         });
 
         var pageInfo = new PageInfo 
@@ -254,7 +255,7 @@ public class UserManager : IUserService
 
         SuccessResponse = new SuccessResponse
         {
-            Data = usersList,
+            Data = users,
             PageInfo = pageInfo
         };
         return true;
