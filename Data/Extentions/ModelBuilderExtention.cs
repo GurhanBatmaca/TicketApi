@@ -58,27 +58,27 @@ public static class ModelBuilderExtention
         );
 
         modelBuilder.Entity<Ticket>().HasData(
-            new Ticket {Id=1,SeatNumber=1,Limit=100,Name="Mercan Dede Konseri",Url="mercan-dede-konseri",Price=1000,EventDate=new DateTime(2026, 12, 01, 21, 00, 10),AddressId=1,ActivityId=1,ImageUrl=""},
+            new Ticket {Id=1,Limit=100,Name="Mercan Dede Konseri",Url="mercan-dede-konseri",Price=1000,EventDate=new DateTime(2026, 12, 01, 21, 00, 10),AddressId=1,ActivityId=1,ImageUrl=""},
 
-            new Ticket {Id=2,SeatNumber=2,Limit=100,Name="Sezen Aksu Konseri",Url="sezen-aksu-konseri",Price=1500,EventDate=new DateTime(2026, 10, 01, 21, 00, 10),AddressId=1,ActivityId=1,ImageUrl=""},
+            new Ticket {Id=2,Limit=100,Name="Sezen Aksu Konseri",Url="sezen-aksu-konseri",Price=1500,EventDate=new DateTime(2026, 10, 01, 21, 00, 10),AddressId=1,ActivityId=1,ImageUrl=""},
 
-            new Ticket {Id=3,SeatNumber=3,Limit=100,Name="Ajda Pekkan Konseri",Url="ajda-pekkan-konseri",Price=1500,EventDate=new DateTime(2026, 06, 01, 21, 00, 10),AddressId=2,ActivityId=1,ImageUrl=""},
+            new Ticket {Id=3,Limit=100,Name="Ajda Pekkan Konseri",Url="ajda-pekkan-konseri",Price=1500,EventDate=new DateTime(2026, 06, 01, 21, 00, 10),AddressId=2,ActivityId=1,ImageUrl=""},
 
-            new Ticket {Id=4,SeatNumber=4,Limit=100,Name="Ajda Pekkan Konseri",Url="ajda-pekkan-konseri",
+            new Ticket {Id=4,Limit=100,Name="Ajda Pekkan Konseri",Url="ajda-pekkan-konseri",
             Price=1500,EventDate=new DateTime(2026, 05, 01, 21, 00, 10),AddressId=2,ActivityId=1,ImageUrl=""},
 
-            new Ticket {Id=5,SeatNumber=5,Limit=100,Name="Betül Mardin Konuşma",Url="betul-mardin-konusma",
+            new Ticket {Id=5,Limit=100,Name="Betül Mardin Konuşma",Url="betul-mardin-konusma",
             Price=1200,EventDate=new DateTime(2026, 04, 01, 21, 00, 10),AddressId=3,ActivityId=3,ImageUrl=""},
 
-            new Ticket {Id=6,SeatNumber=1,Limit=100,Name="Serra Yılmaz Konseri",Url="serra-yilmaz-konseri",Price=800,EventDate=new DateTime(2026, 03, 23, 23, 10, 10),AddressId=1,ActivityId=1,ImageUrl=""},
+            new Ticket {Id=6,Limit=100,Name="Serra Yılmaz Konseri",Url="serra-yilmaz-konseri",Price=800,EventDate=new DateTime(2026, 03, 23, 23, 10, 10),AddressId=1,ActivityId=1,ImageUrl=""},
 
-            new Ticket {Id=7,SeatNumber=1,Limit=100,Name="Gülmeyen Gülümseme Tiyatro Oyunu",Url="gulmeyen-gulumseme-tiyatro-oyunu",Price=800,EventDate=new DateTime(2026, 02, 23, 23, 10, 10),AddressId=5,ActivityId=4,ImageUrl=""},
+            new Ticket {Id=7,Limit=100,Name="Gülmeyen Gülümseme Tiyatro Oyunu",Url="gulmeyen-gulumseme-tiyatro-oyunu",Price=800,EventDate=new DateTime(2026, 02, 23, 23, 10, 10),AddressId=5,ActivityId=4,ImageUrl=""},
 
-            new Ticket {Id=8,SeatNumber=1,Limit=100,Name="Kaos Kafe Tiyatro Oyunu",Url="kaos-kafe-tiyatro-oyunu",Price=500,EventDate=new DateTime(2026, 02, 20, 23, 10, 10),AddressId=6,ActivityId=4,ImageUrl=""},
+            new Ticket {Id=8,Limit=100,Name="Kaos Kafe Tiyatro Oyunu",Url="kaos-kafe-tiyatro-oyunu",Price=500,EventDate=new DateTime(2026, 02, 20, 23, 10, 10),AddressId=6,ActivityId=4,ImageUrl=""},
 
-            new Ticket {Id=9,SeatNumber=1,Limit=100,Name="Rüya Takipçileri Sinama Filmi",Url="ruya-takipcileri-sinama-filmi",Price=500,EventDate=new DateTime(2026, 01, 23, 23, 10, 10),AddressId=7,ActivityId=5,ImageUrl=""},
+            new Ticket {Id=9,Limit=100,Name="Rüya Takipçileri Sinama Filmi",Url="ruya-takipcileri-sinama-filmi",Price=500,EventDate=new DateTime(2026, 01, 23, 23, 10, 10),AddressId=7,ActivityId=5,ImageUrl=""},
 
-            new Ticket {Id=10,SeatNumber=1,Limit=100,Name="Kuantum Kediler Sinama Filmi",Url="kuantum-kediler-sinama-filmi",Price=500,EventDate=new DateTime(2026, 01, 20, 23, 10, 10),AddressId=7,ActivityId=5,ImageUrl=""}
+            new Ticket {Id=10,Limit=100,Name="Kuantum Kediler Sinama Filmi",Url="kuantum-kediler-sinama-filmi",Price=500,EventDate=new DateTime(2026, 01, 20, 23, 10, 10),AddressId=7,ActivityId=5,ImageUrl=""}
         );
 
         modelBuilder.Entity<Work>().HasData(
@@ -169,6 +169,17 @@ public static class ModelBuilderExtention
             new City {Id = 7 ,PlateNumber = 7,Name="Antalya",Url="antalya",ImageUrl=""},
             new City {Id = 34 ,PlateNumber = 34,Name="İstanbul",Url="istanbul",ImageUrl=""},
             new City {Id = 35 ,PlateNumber = 35,Name="İzmir",Url="izmir",ImageUrl=""}
+        );
+
+        modelBuilder.Entity<ReservedSeat>().HasData(
+            new ReservedSeat {Id=1,SeatNumber=1,TicketId=1},
+            new ReservedSeat {Id=2,SeatNumber=2,TicketId=1},
+            new ReservedSeat {Id=3,SeatNumber=3,TicketId=1},
+            new ReservedSeat {Id=4,SeatNumber=4,TicketId=1},
+
+            new ReservedSeat {Id=5,SeatNumber=5,TicketId=1},
+            new ReservedSeat {Id=6,SeatNumber=6,TicketId=1},
+            new ReservedSeat {Id=7,SeatNumber=7,TicketId=1}
         );
     }
 }
