@@ -34,7 +34,7 @@ public class TicketManager : ITicketService
         var tickets = ticketList.Select(e => new TicketSummaryDTO {
             Name = e.Name,
             Price = e.Price,
-            EventDate = e.EventDate,
+            EventDate = e.EventDate.ToString("yyyy/dd/MM HH:mm:ss"),
             ImageUrl = e.ImageUrl,
             Activity = e.Activity!.Name,
             Address = e.Address!.Title,
@@ -86,7 +86,7 @@ public class TicketManager : ITicketService
          var tickets = ticketList.Select(e => new TicketSummaryDTO {
             Name = e.Name,
             Price = e.Price,
-            EventDate = e.EventDate,
+            EventDate = e.EventDate.ToString("yyyy/dd/MM HH:mm:ss"),
             ImageUrl = e.ImageUrl,
             Activity = e.Activity!.Name,
             Address = e.Address!.Title,
@@ -135,7 +135,7 @@ public class TicketManager : ITicketService
         var tickets = ticketList.Select(e => new TicketSummaryDTO {
             Name = e.Name,
             Price = e.Price,
-            EventDate = e.EventDate,
+            EventDate = e.EventDate.ToString("yyyy/dd/MM HH:mm:ss"),
             ImageUrl = e.ImageUrl,
             Activity = e.Activity!.Name,
             Address = e.Address!.Title,
@@ -185,7 +185,7 @@ public class TicketManager : ITicketService
             Name = ticket!.Name,
             Price = ticket.Price,
             Url = ticket.Url,
-            EventDate = ticket.EventDate,
+            EventDate = ticket.EventDate.ToString("yyyy/dd/MM HH:mm:ss"),
             ImageUrl = ticket.ImageUrl,
             Activity = new ActivityDTO {
                 Name = ticket.Activity!.Name,
