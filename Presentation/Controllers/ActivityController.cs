@@ -34,7 +34,7 @@ public class ActivityController: ControllerBase
     }
 
     [HttpGet]
-    [Route("allWithCategories")]
+    [Route("allwithcategories")]
     public async Task<IActionResult> AllWithCategories()
     {
 
