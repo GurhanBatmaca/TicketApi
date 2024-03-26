@@ -9,11 +9,12 @@ public class Ticket
     public string ImageUrl { get; set; } = string.Empty;
     public DateTime EventDate { get; set; }
     public string Url { get; set; } = string.Empty;
-    
+
+    public SeatInfo? SeatInfo { get; set; }
     public int AddressId { get; set; }
     public Address? Address { get; set; }
     public int ActivityId { get; set; }
     public Activity? Activity { get; set; }
-    public List<ReservedSeat> ReservedSeats { get; set; } = [];
+    // public List<ReservedSeat> ReservedSeats { get; set; } = [];
     public List<TicketArtor> TicketArtors { get; set; } = [];
 }

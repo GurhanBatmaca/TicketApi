@@ -291,7 +291,11 @@ public class TicketManager : ITicketService
                 TicketId = model.Id,
                 ArtorId = ai
 
-            }).ToList()
+            }).ToList(),
+            SeatInfo = new SeatInfo {
+                FrontLine = 200,
+                TicketId = model.Id
+            }
         };
 
         if(model.Image is null)

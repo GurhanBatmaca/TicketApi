@@ -58,27 +58,27 @@ public static class ModelBuilderExtention
         );
 
         modelBuilder.Entity<Ticket>().HasData(
-            new Ticket {Id=1,Limit=100,Name="Mercan Dede Konseri",Url="mercan-dede-konseri",Price=1000,EventDate=new DateTime(2026, 12, 01, 21, 00, 10),AddressId=1,ActivityId=1,ImageUrl=""},
+            new Ticket {Id=1,Limit=1000,Name="Mercan Dede Konseri",Url="mercan-dede-konseri",Price=1000,EventDate=new DateTime(2026, 12, 01, 21, 00, 10),AddressId=1,ActivityId=1,ImageUrl=""},
 
-            new Ticket {Id=2,Limit=100,Name="Sezen Aksu Konseri",Url="sezen-aksu-konseri",Price=1500,EventDate=new DateTime(2026, 10, 01, 21, 00, 10),AddressId=1,ActivityId=1,ImageUrl=""},
+            new Ticket {Id=2,Limit=1100,Name="Sezen Aksu Konseri",Url="sezen-aksu-konseri",Price=1500,EventDate=new DateTime(2026, 10, 01, 21, 00, 10),AddressId=1,ActivityId=1,ImageUrl=""},
 
-            new Ticket {Id=3,Limit=100,Name="Ajda Pekkan Konseri",Url="ajda-pekkan-konseri",Price=1500,EventDate=new DateTime(2026, 06, 01, 21, 00, 10),AddressId=2,ActivityId=1,ImageUrl=""},
+            new Ticket {Id=3,Limit=800,Name="Ajda Pekkan Konseri",Url="ajda-pekkan-konseri",Price=1500,EventDate=new DateTime(2026, 06, 01, 21, 00, 10),AddressId=2,ActivityId=1,ImageUrl=""},
 
-            new Ticket {Id=4,Limit=100,Name="Ajda Pekkan Konseri",Url="ajda-pekkan-konseri",
+            new Ticket {Id=4,Limit=1000,Name="Ajda Pekkan Konseri",Url="ajda-pekkan-konseri",
             Price=1500,EventDate=new DateTime(2026, 05, 01, 21, 00, 10),AddressId=2,ActivityId=1,ImageUrl=""},
 
-            new Ticket {Id=5,Limit=100,Name="Betül Mardin Konuşma",Url="betul-mardin-konusma",
+            new Ticket {Id=5,Limit=1000,Name="Betül Mardin Konuşma",Url="betul-mardin-konusma",
             Price=1200,EventDate=new DateTime(2026, 04, 01, 21, 00, 10),AddressId=3,ActivityId=3,ImageUrl=""},
 
-            new Ticket {Id=6,Limit=100,Name="Serra Yılmaz Konseri",Url="serra-yilmaz-konseri",Price=800,EventDate=new DateTime(2026, 03, 23, 23, 10, 10),AddressId=1,ActivityId=1,ImageUrl=""},
+            new Ticket {Id=6,Limit=1000,Name="Serra Yılmaz Konseri",Url="serra-yilmaz-konseri",Price=800,EventDate=new DateTime(2026, 03, 23, 23, 10, 10),AddressId=1,ActivityId=1,ImageUrl=""},
 
-            new Ticket {Id=7,Limit=100,Name="Gülmeyen Gülümseme Tiyatro Oyunu",Url="gulmeyen-gulumseme-tiyatro-oyunu",Price=800,EventDate=new DateTime(2026, 02, 23, 23, 10, 10),AddressId=5,ActivityId=4,ImageUrl=""},
+            new Ticket {Id=7,Limit=1000,Name="Gülmeyen Gülümseme Tiyatro Oyunu",Url="gulmeyen-gulumseme-tiyatro-oyunu",Price=800,EventDate=new DateTime(2026, 02, 23, 23, 10, 10),AddressId=5,ActivityId=4,ImageUrl=""},
 
-            new Ticket {Id=8,Limit=100,Name="Kaos Kafe Tiyatro Oyunu",Url="kaos-kafe-tiyatro-oyunu",Price=500,EventDate=new DateTime(2026, 02, 20, 23, 10, 10),AddressId=6,ActivityId=4,ImageUrl=""},
+            new Ticket {Id=8,Limit=1000,Name="Kaos Kafe Tiyatro Oyunu",Url="kaos-kafe-tiyatro-oyunu",Price=500,EventDate=new DateTime(2026, 02, 20, 23, 10, 10),AddressId=6,ActivityId=4,ImageUrl=""},
 
-            new Ticket {Id=9,Limit=100,Name="Rüya Takipçileri Sinama Filmi",Url="ruya-takipcileri-sinama-filmi",Price=500,EventDate=new DateTime(2026, 01, 23, 23, 10, 10),AddressId=7,ActivityId=5,ImageUrl=""},
+            new Ticket {Id=9,Limit=1000,Name="Rüya Takipçileri Sinama Filmi",Url="ruya-takipcileri-sinama-filmi",Price=500,EventDate=new DateTime(2026, 01, 23, 23, 10, 10),AddressId=7,ActivityId=5,ImageUrl=""},
 
-            new Ticket {Id=10,Limit=100,Name="Kuantum Kediler Sinama Filmi",Url="kuantum-kediler-sinama-filmi",Price=500,EventDate=new DateTime(2026, 01, 20, 23, 10, 10),AddressId=7,ActivityId=5,ImageUrl=""}
+            new Ticket {Id=10,Limit=1000,Name="Kuantum Kediler Sinama Filmi",Url="kuantum-kediler-sinama-filmi",Price=500,EventDate=new DateTime(2026, 01, 20, 23, 10, 10),AddressId=7,ActivityId=5,ImageUrl=""}
         );
 
         modelBuilder.Entity<Work>().HasData(
@@ -171,15 +171,31 @@ public static class ModelBuilderExtention
             new City {Id = 35 ,PlateNumber = 35,Name="İzmir",Url="izmir",ImageUrl=""}
         );
 
-        modelBuilder.Entity<ReservedSeat>().HasData(
-            new ReservedSeat {Id=1,SeatNumber=1,TicketId=1},
-            new ReservedSeat {Id=2,SeatNumber=2,TicketId=1},
-            new ReservedSeat {Id=3,SeatNumber=3,TicketId=1},
-            new ReservedSeat {Id=4,SeatNumber=4,TicketId=1},
-
-            new ReservedSeat {Id=5,SeatNumber=5,TicketId=1},
-            new ReservedSeat {Id=6,SeatNumber=6,TicketId=1},
-            new ReservedSeat {Id=7,SeatNumber=7,TicketId=1}
+        modelBuilder.Entity<SeatInfo>().HasData(
+            new SeatInfo {Id=1,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=1},
+            new SeatInfo {Id=2,FrontLine=150,MiddleLine=250,BackLine=700,TicketId=2},
+            new SeatInfo {Id=3,FrontLine=100,MiddleLine=200,BackLine=500,TicketId=3},
+            new SeatInfo {Id=4,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=4},
+            new SeatInfo {Id=5,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=5},
+            new SeatInfo {Id=6,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=6},
+            new SeatInfo {Id=7,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=7},
+            new SeatInfo {Id=8,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=8},
+            new SeatInfo {Id=9,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=9},
+            new SeatInfo {Id=10,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=10},
+            new SeatInfo {Id=11,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=11},
+            new SeatInfo {Id=12,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=12},
+            new SeatInfo {Id=13,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=13}
         );
+
+        // modelBuilder.Entity<ReservedSeat>().HasData(
+        //     new ReservedSeat {Id=1,SeatNumber=1,TicketId=1},
+        //     new ReservedSeat {Id=2,SeatNumber=2,TicketId=1},
+        //     new ReservedSeat {Id=3,SeatNumber=3,TicketId=1},
+        //     new ReservedSeat {Id=4,SeatNumber=4,TicketId=1},
+
+        //     new ReservedSeat {Id=5,SeatNumber=5,TicketId=1},
+        //     new ReservedSeat {Id=6,SeatNumber=6,TicketId=1},
+        //     new ReservedSeat {Id=7,SeatNumber=7,TicketId=1}
+        // );
     }
 }
