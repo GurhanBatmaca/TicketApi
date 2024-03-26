@@ -300,7 +300,7 @@ public class TicketManager : ITicketService
 
         if(model.Image is null)
         {
-            ticket.ImageUrl = "defaultImage.jpg";
+            ticket.ImageUrl = "ticketDefault.jpg";
         }
         else
         {
@@ -424,7 +424,7 @@ public class TicketManager : ITicketService
                 await model!.Image.CopyToAsync(stream);
             }
 
-            if(ticket!.ImageUrl != "defaultImage.jpg")
+            if(ticket!.ImageUrl != "ticketDefault.jpg")
                 {
                     var exPath = Path.Combine(Directory.GetCurrentDirectory(),"..\\Presentation\\wwwroot\\images",ticket!.ImageUrl!);
                     System.IO.File.Delete(exPath);
