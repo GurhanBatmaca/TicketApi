@@ -181,10 +181,7 @@ public static class ModelBuilderExtention
             new SeatInfo {Id=7,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=7},
             new SeatInfo {Id=8,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=8},
             new SeatInfo {Id=9,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=9},
-            new SeatInfo {Id=10,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=10},
-            new SeatInfo {Id=11,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=11},
-            new SeatInfo {Id=12,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=12},
-            new SeatInfo {Id=13,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=13}
+            new SeatInfo {Id=10,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=10}
         );
 
         // modelBuilder.Entity<ReservedSeat>().HasData(
