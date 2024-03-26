@@ -137,6 +137,7 @@ public class EfCoreTicketRepository: EfCoreGenericRepository<Ticket>,ITicketRepo
     {
         return await Context!.Tickets
                                 .Where(e=> e.Limit > 0)
+                                .Include( e=> e.SeatInfo)
                                 .Include(e=> e.Address)
                                 .ThenInclude(e=>e!.City)
                                 .Include(e=> e.Activity)

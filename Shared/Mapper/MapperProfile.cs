@@ -14,6 +14,7 @@ public class MapperProfile: Profile
         CreateMap<City,CityDTO>();
         CreateMap<Ticket,TicketDTO>();
         CreateMap<Work,WorkDTO>();
+        CreateMap<SeatInfo,SeatInfoDTO>();
 
         CreateMap<Activity,ActivitySummaryDTO>();
         CreateMap<Artor,ArtorSummaryDTO>();

@@ -172,16 +172,16 @@ public static class ModelBuilderExtention
         );
 
         modelBuilder.Entity<SeatInfo>().HasData(
-            new SeatInfo {Id=1,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=1},
-            new SeatInfo {Id=2,FrontLine=150,MiddleLine=250,BackLine=700,TicketId=2},
-            new SeatInfo {Id=3,FrontLine=100,MiddleLine=200,BackLine=500,TicketId=3},
-            new SeatInfo {Id=4,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=4},
-            new SeatInfo {Id=5,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=5},
-            new SeatInfo {Id=6,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=6},
-            new SeatInfo {Id=7,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=7},
-            new SeatInfo {Id=8,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=8},
-            new SeatInfo {Id=9,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=9},
-            new SeatInfo {Id=10,FrontLine=100,MiddleLine=300,BackLine=600,TicketId=10}
+            new SeatInfo {Id=1,FrontView=100,MiddleView=300,BackView=600,TicketId=1},
+            new SeatInfo {Id=2,FrontView=150,MiddleView=250,BackView=700,TicketId=2},
+            new SeatInfo {Id=3,FrontView=100,MiddleView=200,BackView=500,TicketId=3},
+            new SeatInfo {Id=4,FrontView=100,MiddleView=300,BackView=600,TicketId=4},
+            new SeatInfo {Id=5,FrontView=100,MiddleView=300,BackView=600,TicketId=5},
+            new SeatInfo {Id=6,FrontView=100,MiddleView=300,BackView=600,TicketId=6},
+            new SeatInfo {Id=7,FrontView=100,MiddleView=300,BackView=600,TicketId=7},
+            new SeatInfo {Id=8,FrontView=100,MiddleView=300,BackView=600,TicketId=8},
+            new SeatInfo {Id=9,FrontView=100,MiddleView=300,BackView=600,TicketId=9},
+            new SeatInfo {Id=10,FrontView=100,MiddleView=300,BackView=600,TicketId=10}
         );
 
         // modelBuilder.Entity<ReservedSeat>().HasData(

@@ -12,6 +12,18 @@ public class TicketModel
     public int Limit { get; set; }
     
     [Required]
+    [Range(1,50000)]
+    public int FrontView { get; set; }
+
+    [Required]
+    [Range(1,50000)]
+    public int MiddleView { get; set; }
+    
+    [Required]
+    [Range(1,50000)]
+    public int BackView { get; set; }
+    
+    [Required]
     [StringLength(20,MinimumLength = 6)]
 
     public string Name { get; set; } = string.Empty;

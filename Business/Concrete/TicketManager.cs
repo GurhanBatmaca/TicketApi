@@ -187,6 +187,7 @@ public class TicketManager : ITicketService
             Url = ticket.Url,
             EventDate = ticket.EventDate.ToString("yyyy/dd/MM HH:mm:ss"),
             ImageUrl = ticket.ImageUrl,
+            Limit = ticket.Limit,
             Activity = new ActivityDTO {
                 Name = ticket.Activity!.Name,
                 Url = ticket.Activity.Url,
@@ -202,7 +203,8 @@ public class TicketManager : ITicketService
                     Url = ticket.Address.City!.Url
                 }
             },
-            Artors = ticket.TicketArtors.Select( i=> _mapper!.Map<ArtorDTO>(i.Artor)).ToList()
+            Artors = ticket.TicketArtors.Select( i=> _mapper!.Map<ArtorDTO>(i.Artor)).ToList(),
+            SeatInfo = _mapper!.Map<SeatInfoDTO>(ticket.SeatInfo)
         };
 
         SuccessResponse = new SuccessResponse 
@@ -276,7 +278,16 @@ public class TicketManager : ITicketService
                 };
                 return false;
             }
-        }        
+        }  
+
+        if(model.Limit < (model.FrontView+model.MiddleView+model.BackView))  
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Limit hatası,toplam koltuk sayısı geçildi."
+            };
+            return false;
+        }   
         
         var ticket = new Ticket
         {
@@ -293,7 +304,9 @@ public class TicketManager : ITicketService
 
             }).ToList(),
             SeatInfo = new SeatInfo {
-                FrontLine = 200,
+                FrontView = model.FrontView,
+                MiddleView = model.MiddleView,
+                BackView = model.BackView,
                 TicketId = model.Id
             }
         };
@@ -401,6 +414,16 @@ public class TicketManager : ITicketService
             return false;
         }
 
+        if(model.Limit < (model.FrontView+model.MiddleView+model.BackView))  
+        {
+            ErrorResponse = new ErrorResponse 
+            {
+                Error = "Limit hatası,toplam koltuk sayısı geçildi."
+            };
+            return false;
+        } 
+
+
         ticket!.Name = model.Name;
         ticket.Url = UrlConverter.Edit(model.Name);
         ticket.Limit = model.Limit;
@@ -412,6 +435,12 @@ public class TicketManager : ITicketService
             TicketId = model.Id,
             ArtorId = ai
         }).ToList();
+        ticket.SeatInfo = new SeatInfo {
+            FrontView = model.FrontView,
+            MiddleView = model.MiddleView,
+            BackView = model.BackView,
+            TicketId = model.Id
+        };
 
         if(model.Image is not null)
         {
