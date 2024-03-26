@@ -425,12 +425,12 @@ public class TicketManager : ITicketService
             }
 
             if(ticket!.ImageUrl != "ticketDefault.jpg")
-                {
-                    var exPath = Path.Combine(Directory.GetCurrentDirectory(),"..\\Presentation\\wwwroot\\images",ticket!.ImageUrl!);
-                    System.IO.File.Delete(exPath);
+            {
+                var exPath = Path.Combine(Directory.GetCurrentDirectory(),"..\\Presentation\\wwwroot\\images",ticket!.ImageUrl!);
+                System.IO.File.Delete(exPath);
 
-                    ticket.ImageUrl = randomName;
-                }
+                ticket.ImageUrl = randomName;
+            }
             
             ticket.ImageUrl = randomName;  
         }
@@ -453,6 +453,13 @@ public class TicketManager : ITicketService
                 Error = "Ticket id hatası."
             };
             return false;
+        }
+
+        if(ticket!.ImageUrl != "ticketDefault.jpg")
+        {
+            var exPath = Path.Combine(Directory.GetCurrentDirectory(),"..\\Presentation\\wwwroot\\images",ticket!.ImageUrl!);
+            System.IO.File.Delete(exPath);
+
         }
 
         await _unitOfWork.Tickets.Delete(ticket);
