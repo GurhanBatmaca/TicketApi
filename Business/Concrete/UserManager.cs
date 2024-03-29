@@ -41,6 +41,8 @@ public class UserManager : IUserService
             return false;
         }
 
+        // username türkçe karater araması yapılacak
+
         var checkEmail = await _unitOfWork!.Users.FindByEmail(model.Email);
 
         if(checkEmail is not null)
