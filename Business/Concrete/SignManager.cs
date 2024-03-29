@@ -66,7 +66,7 @@ public class SignManager : ISignService
 
         var claims = new List<Claim>()
         {
-            new("Email",model.Password!),
+            new("Email",model.Email!),
             new(ClaimTypes.NameIdentifier,user.Id),           
             new(ClaimTypes.Name,user.UserName!)             
         };
