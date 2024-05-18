@@ -8,7 +8,6 @@ namespace Presentation;
 
 [ApiController]
 [Route("api/auth")]
-[Authorize]
 public class AuthController: ControllerBase
 {
 
