@@ -25,11 +25,15 @@
 
 ### API Response
 
+```
 "data": 
 {
     "token": "{Token}",
     "expireDate": "{Token expire date}"
 }
+```
+
+
 
 "data": 
 [{
