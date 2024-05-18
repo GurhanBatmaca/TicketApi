@@ -1,9 +1,5 @@
+# Etkinlik biletleri alım satımı için Api
 
-# Etkinlik biletleri alım satımı 
-
-Çevrimiçi ürün satışı yapılan platform.
-
-  
 ## Özellikler
 
 * Asp.Net Core Api 8.0
