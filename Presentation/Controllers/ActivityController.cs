@@ -7,7 +7,7 @@ namespace Presentation;
 
 [ApiController]
 [Route("api/activities")]
-// [Authorize]
+[Authorize]
 public class ActivityController: ControllerBase
 {
     protected private IActivityService _activityService;

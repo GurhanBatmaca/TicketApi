@@ -1,4 +1,5 @@
 ﻿using Business;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared;
 
@@ -6,6 +7,7 @@ namespace Presentation;
 
 [ApiController]
 [Route("api/artors")]
+[Authorize]
 public class ArtorController: ControllerBase
 {
 

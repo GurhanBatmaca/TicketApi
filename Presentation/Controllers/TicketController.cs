@@ -1,10 +1,12 @@
 ﻿using Business;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared;
 namespace Presentation;
 
 [ApiController]
 [Route("api/tickets")]
+[Authorize]
 public class TicketController: ControllerBase
 {
     protected private ITicketService _ticketService;

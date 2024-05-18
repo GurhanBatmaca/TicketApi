@@ -1,4 +1,5 @@
 ﻿using Business;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared;
 
@@ -6,6 +7,7 @@ namespace Presentation;
 
 [ApiController]
 [Route("api/admin")]
+[Authorize(Roles ="Admin")]
 public class AdminController: ControllerBase
 {
 

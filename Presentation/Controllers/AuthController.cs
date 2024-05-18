@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Business;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared;
 
@@ -7,6 +8,7 @@ namespace Presentation;
 
 [ApiController]
 [Route("api/auth")]
+[Authorize]
 public class AuthController: ControllerBase
 {
 
