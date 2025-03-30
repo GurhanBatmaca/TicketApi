@@ -1,76 +1,49 @@
-🎟 Etkinlik Biletleri Alım Satım API
+# 🎟 Etkinlik Biletleri Alım Satım API
 
 Bu API, etkinlik biletlerinin alım satım işlemlerini gerçekleştirmek için geliştirilmiştir. Kullanıcılar biletleri görüntüleyebilir, satın alabilir ve admin yetkileriyle biletleri silebilir. JWT tabanlı kimlik doğrulama ve rol bazlı yetkilendirme ile güvenli erişim sağlanmaktadır.
 
-🚀 Teknolojiler
+## 🚀 Teknolojiler
 
-ASP.NET Core 8.0
+- **ASP.NET Core 8.0**
+- **Katmanlı Mimari**
+- **Entity Framework Core**
+- **Entity Framework Identity**
+- **Authentication ve Role-Based Authorization**
+- **JWT (JSON Web Token) Bearer Token**
+- **Microsoft SQL Server**
 
-Katmanlı Mimari
+---
 
-Entity Framework Core
-
-Entity Framework Identity
-
-Authentication ve Role-Based Authorization
-
-JWT (JSON Web Token) Bearer Token
-
-Microsoft SQL Server
-
-📌 API Endpoints
+## 📌 API Endpoints
 
 Aşağıda API'de kullanılan endpoint'ler ve HTTP istek metotları listelenmiştir:
 
-HTTP Verbs
+| HTTP Verbs | Endpoint                                                             | Açıklama                                       |
+| ---------- | -------------------------------------------------------------------- | ---------------------------------------------- |
+| **POST**   | `/api/auth/register`                                                 | Yeni bir kullanıcı hesabı oluşturur.           |
+| **POST**   | `/api/auth/login`                                                    | Var olan bir kullanıcı hesabıyla giriş yapar.  |
+| **GET**    | `/api/tickets/all?page=1`                                            | Platformdaki biletleri sayfalı olarak getirir. |
+| **GET**    | `/api/tickets/search?Query=sinema&Date=2024-12-01&Price=1000&page=1` | Belirtilen kriterlere göre biletleri arar.     |
+| **DELETE** | `/api/admin/deleteticket/{id}`                                       | Bir bileti admin yetkisiyle siler.             |
 
-Endpoint
+---
 
-Açıklama
+## 🔐 API Yanıt Örnekleri
 
-POST
+### 1️⃣ **Kimlik Doğrulama Yanıtı**
 
-/api/auth/register
-
-Yeni bir kullanıcı hesabı oluşturur.
-
-POST
-
-/api/auth/login
-
-Var olan bir kullanıcı hesabıyla giriş yapar.
-
-GET
-
-/api/tickets/all?page=1
-
-Platformdaki biletleri sayfalı olarak getirir.
-
-GET
-
-/api/tickets/search?Query=sinema&Date=2024-12-01&Price=1000&page=1
-
-Belirtilen kriterlere göre biletleri arar.
-
-DELETE
-
-/api/admin/deleteticket/{id}
-
-Bir bileti admin yetkisiyle siler.
-
-🔐 API Yanıt Örnekleri
-
-1️⃣ Kimlik Doğrulama Yanıtı
-
+```json
 {
     "data": {
         "token": "{Token}",
         "expireDate": "{Token expire date}"
     }
 }
+```
 
-2️⃣ Bilet Arama Yanıtı
+### 2️⃣ **Bilet Arama Yanıtı**
 
+```json
 {
     "data": [
         {
@@ -99,28 +72,35 @@ Bir bileti admin yetkisiyle siler.
         "totalPages": 100
     }
 }
+```
 
-📌 Kurulum ve Çalıştırma
+---
 
-Projeyi Klonlayın:
+## 📌 Kurulum ve Çalıştırma
 
-git clone https://github.com/gurhanbatmaca/event-ticket-api.git
-cd event-ticket-api
+1. **Projeyi Klonlayın:**
+   ```sh
+   git clone https://github.com/gurhanbatmaca/event-ticket-api.git
+   cd event-ticket-api
+   ```
+2. **Bağımlılıkları Yükleyin:**
+   ```sh
+   dotnet restore
+   ```
+3. **Veritabanı Göçlerini Çalıştırın:**
+   ```sh
+   dotnet ef database update
+   ```
+4. **Uygulamayı Başlatın:**
+   ```sh
+   dotnet run
+   ```
 
-Bağımlılıkları Yükleyin:
+---
 
-dotnet restore
+## 🛠 Katkıda Bulunma
 
-Veritabanı Göçlerini Çalıştırın:
+Her türlü katkıya açığız! Fork alıp geliştirme yapabilir ve pull request gönderebilirsiniz. Sorularınız için [Gürhan Batmaca](https://github.com/gurhanbatmaca) ile iletişime geçebilirsiniz.
 
-dotnet ef database update
-
-Uygulamayı Başlatın:
-
-dotnet run
-
-🛠 Katkıda Bulunma
-
-Her türlü katkıya açığız! Fork alıp geliştirme yapabilir ve pull request gönderebilirsiniz. Sorularınız için Gürhan Batmaca ile iletişime geçebilirsiniz.
-
-🚀 İyi kodlamalar!
+🚀 **İyi kodlamalar!**
+ 
