@@ -83,15 +83,17 @@ Aşağıda API'de kullanılan endpoint'ler ve HTTP istek metotları listelenmiş
    git clone https://github.com/gurhanbatmaca/event-ticket-api.git
    cd event-ticket-api
    ```
-2. **Bağımlılıkları Yükleyin:**
+2. **appsettings.json Dosyasını Yapılandırın**
+   
+3. **Bağımlılıkları Yükleyin:**
    ```sh
    dotnet restore
    ```
-3. **Veritabanı Göçlerini Çalıştırın:**
+4. **Veritabanı Göçlerini Çalıştırın:**
    ```sh
    dotnet ef database update
    ```
-4. **Uygulamayı Başlatın:**
+5. **Uygulamayı Başlatın:**
    ```sh
    dotnet run
    ```
